@@ -364,10 +364,12 @@ async function downloadModel(url, path) {
 
         let downloadTime = new Date().getTime();
 
+        let count = 0;
+
         let downloadedLength = 0;
         response.data.on('data', chunk => {
 
-            console.log('chunk:', chunk);
+            console.log('count:', count++);
 
             downloadedLength += chunk.length;
             const percentage = ((downloadedLength / totalLength) * 100).toFixed(2);
