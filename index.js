@@ -911,7 +911,7 @@ app.get('/render-description', async (req, res) => {
     console.log('ignoreTags', ignoreTags);
 
     let formattedDataString = '';
-    if(referenceUrl && referenceUrl.length > 0) {
+    if(req.query.referenceUrl && req.query.referenceUrl.length > 0) {
         try {
             let pageSource = await loadPageSource(referenceUrl, req.query.navigate);
 
@@ -957,17 +957,17 @@ app.get('/render-description', async (req, res) => {
     formattedDataString != 'undefined' &&
     formattedDataString.length > 0 ? `${formattedDataString}` : ''
 
-    const resultPrompt = //prompt
-    `Create a ${
-        contentType.split('/')[1].toLowerCase() == 'json' ? 
-        'JSON' : 
-        contentType.split('/')[0].toLowerCase() == 'application' ?
-        contentType.split('/')[1].toLowerCase() :
-        contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
-    } code, ${prompt}`;
+    const resultPrompt = prompt
+    // `Create a ${
+    //     contentType.split('/')[1].toLowerCase() == 'json' ? 
+    //     'JSON' : 
+    //     contentType.split('/')[0].toLowerCase() == 'application' ?
+    //     contentType.split('/')[1].toLowerCase() :
+    //     contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
+    // } code, ${prompt}`;
 
-    const dataFillString =
-    ` this data: \n`
+    const dataFillString = ''
+    // ` this data: \n`
 
     const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
     let response = '';
