@@ -377,7 +377,19 @@ async function loadLlamaModules() {
         LlamaContext = module.LlamaContext;
         LlamaChatSession = module.LlamaChatSession;
 
-        model = new LlamaModel({ modelPath: filePath });
+        model = new LlamaModel({ modelPath: filePath,
+            enableLogging: true,
+            nCtx: 1024,
+            seed: 0,
+            f16Kv: false,
+            logitsAll: false,
+            vocabOnly: false,
+            useMlock: false,
+            embedding: false,
+            useMmap: true,
+            nGpuLayers: 0 
+        });
+
         context = new LlamaContext({
             model,
             mmap: false,
@@ -506,7 +518,23 @@ async function fetchGptResponse(prompt, contentType) {
     // });
     // const session = new LlamaChatSession({context});
     
-    return await session.prompt(prompt, {maxTokens: context.getContextSize()});
+
+
+    const params = {
+        nThreads: 4,
+        nTokPredict: 2048,
+        topK: 40,
+        topP: 0.1,
+        temp: 0.2,
+        repeatPenalty: 1,
+        prompt,
+    };
+
+    return await llama.createCompletion(params);
+
+    
+
+    // return await session.prompt(prompt, {maxTokens: context.getContextSize()});
 
 
 
