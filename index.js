@@ -308,7 +308,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 64;
+const TOKENS_MAX = 192;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -450,7 +450,7 @@ async function loadLlamaModules() {
         model = new LlamaModel({ 
             modelPath: filePath,
             // enableLogging: true,
-            // nCtx: 1024,
+            nCtx: 1024,
             // seed: 0,
             // f16Kv: false,
             // logitsAll: false,
@@ -612,7 +612,7 @@ async function fetchGptResponse(prompt, contentType) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 8,
+        nThreads: 16,
         maxTokens: context.getContextSize(),
     });
 
@@ -1090,7 +1090,7 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
