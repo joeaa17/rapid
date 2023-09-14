@@ -401,7 +401,7 @@ let model, context;
 
 let session;
 
-let filePath = '/var/data/model.gguf';
+const filePath = '/var/data/model.gguf';
 
 async function loadLlamaModules() {
     const modelURL = 
@@ -554,9 +554,9 @@ async function loadLlamaModules() {
 
 
 // does the file from the filepath exists
-const fileExists = async (filePath) => {
+const fileExists = async (_filePath) => {
     try {
-        await fsPromises.access(filePath);
+        await fsPromises.access(_filePath);
         return true;
     } catch (error) {
         return false;
