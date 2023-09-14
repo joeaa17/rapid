@@ -380,10 +380,10 @@ async function loadLlamaModules() {
         model = new LlamaModel({ modelPath: filePath });
         context = new LlamaContext({
             model,
-            // mmap: false,
-            // gpu: false,
-            // maxTokens: 8,
-            // batchSize: 1
+            mmap: false,
+            gpu: false,
+            maxTokens: 128,
+            batchSize: 1
         });
 
         session = new LlamaChatSession({ context });
@@ -506,7 +506,7 @@ async function fetchGptResponse(prompt, contentType) {
     // });
     // const session = new LlamaChatSession({context});
     
-    return await session.prompt(prompt);//, {maxTokens: context.getContextSize()});
+    return await session.prompt(prompt, {maxTokens: context.getContextSize()});
 
 
 
