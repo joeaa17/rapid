@@ -306,7 +306,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 256;
+const TOKENS_MAX = 1024;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -447,8 +447,8 @@ async function loadLlamaModules() {
 
         context = new LlamaContext({
             model,
-            mmap: false,
-            gpu: false,
+            // mmap: false,
+            // gpu: false,
             // maxTokens: 64,
             // batchSize: 4
         });
