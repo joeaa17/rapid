@@ -306,7 +306,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 128;
+const TOKENS_MAX = 4096;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -589,7 +589,7 @@ async function fetchGptResponse(prompt, contentType) {
 
     return await session.prompt(prompt, {
         nThreads: 8,
-        maxTokens: context.getContextSize()
+        maxTokens: context.getContextSize() / 16,
     });
 
 
