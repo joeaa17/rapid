@@ -359,8 +359,9 @@ let session;
 
 
 async function loadLlamaModules() {
-    const modelURL = 
-     'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
+    const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
+
+    //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
 
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
 
