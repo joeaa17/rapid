@@ -369,24 +369,22 @@ async function downloadModel(url, path) {
         let downloadedLength = 0;
         response.data.on('data', chunk => {
 
-            console.log('count:', count++);
-
+            
             downloadedLength += chunk.length;
             const percentage = ((downloadedLength / totalLength) * 100).toFixed(2);
-            console.log(`Downloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)\n`);
             const currentTime = new Date().getTime();
             const elapsedTime = (currentTime - downloadTime) / 1000;
             const estimatedTimeLeft = (totalLength - downloadedLength) / (downloadedLength / elapsedTime);
-            console.log(`Estimated time left: ${estimatedTimeLeft.toFixed(2)} seconds`);
-            console.log(`Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes\n`);
-
             const downloadSpeed = downloadedLength / elapsedTime;
-            console.log(`Download speed: ${downloadSpeed.toFixed(2)} bytes per second`);
-            console.log(`Download speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second`);
-            console.log(`Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n`);
-
-            console.log('\n');
-
+            
+            console.log(`count: ${count++}\n
+            Downloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)\n
+            Estimated time left: ${estimatedTimeLeft.toFixed(2)} seconds\n
+            Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes\n
+            Download speed: ${downloadSpeed.toFixed(2)} bytes per second\n
+            Download speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second\n
+            Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n\n`);
+            
         });
     } else {
         console.log('Downloading data...');
