@@ -337,10 +337,49 @@ const Q = 1.618033988749895;
 
 const fs = require('fs');
 
+// async function downloadModel(url, path) {
+//     const response = await axios.get(url, {
+//         responseType: 'stream'
+//     });
+
+//     return new Promise((resolve, reject) => {
+//         const fileStream = fs.createWriteStream(path);
+//         response.data.pipe(fileStream);
+//         fileStream.on('finish', resolve);
+//         fileStream.on('error', reject);
+//     });
+// }
+
+
 async function downloadModel(url, path) {
     const response = await axios.get(url, {
         responseType: 'stream'
     });
+
+    // Extract the total length of the content from the headers
+    const totalLength = Number(response.headers['content-length']);
+
+    // If content length is available, monitor progress, otherwise just download
+    if (!isNaN(totalLength)) {
+
+        let downloadTime = new Date().getTime();
+
+        let downloadedLength = 0;
+        response.data.on('data', chunk => {
+            downloadedLength += chunk.length;
+            const percentage = ((downloadedLength / totalLength) * 100).toFixed(2);
+            console.log(`Downloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)`);
+
+            const currentTime = new Date().getTime();
+            const elapsedTime = (currentTime - downloadTime) / 1000;
+            const estimatedTimeLeft = (totalLength - downloadedLength) / (downloadedLength / elapsedTime);
+            console.log(`Estimated time left: ${estimatedTimeLeft.toFixed(2)} seconds`);
+            console.log(`Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes`);
+
+        });
+    } else {
+        console.log('Downloading data...');
+    }
 
     return new Promise((resolve, reject) => {
         const fileStream = fs.createWriteStream(path);
@@ -349,6 +388,8 @@ async function downloadModel(url, path) {
         fileStream.on('error', reject);
     });
 }
+
+
 
 
 let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
@@ -387,16 +428,16 @@ async function loadLlamaModules() {
         LlamaChatSession = module.LlamaChatSession;
 
         model = new LlamaModel({ modelPath: filePath,
-            enableLogging: true,
-            nCtx: 1024,
+            // enableLogging: true,
+            // nCtx: 1024,
             seed: 0,
-            f16Kv: false,
-            logitsAll: false,
-            vocabOnly: false,
-            useMlock: false,
-            embedding: false,
-            useMmap: true,
-            nGpuLayers: 0 
+            // f16Kv: false,
+            // logitsAll: false,
+            // vocabOnly: false,
+            // useMlock: false,
+            // embedding: false,
+            // useMmap: true,
+            // nGpuLayers: 0 
         });
 
         context = new LlamaContext({
