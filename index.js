@@ -24,6 +24,7 @@ const dotenv = require( 'dotenv');
 const { escape } = require('querystring');
 
 
+let initalize = 0;
 const filePath = '/var/data/model.gguf';
 
 
@@ -276,8 +277,6 @@ app.get('/', async (req, res) => {
 
     res.json({ success: 'Server is running' });
 })
-
-let initalize = 0;
 
 
 const main = async () => {
