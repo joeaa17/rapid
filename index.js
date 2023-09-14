@@ -275,6 +275,7 @@ const main = async () => {
     console.log('loading...');
 
     await loadLlamaModules();
+    initalize = 1;
     
     // await NK.xpr.start(port);
     const PORT = process.env.PORT || 3000;
@@ -286,7 +287,7 @@ const main = async () => {
     console.log(`Server is running on port ${PORT}`);
 }
 
-// main()
+main()
 
 const randomBetween = (min, max) => {
     return Math.random() * (max - min) + min;
