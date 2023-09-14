@@ -1,14 +1,8 @@
-# Use a recent version of Ubuntu as the base image
-FROM ubuntu:20.04
+# Use the official Node.js v18 image as the base
+FROM node:18
 
-# Avoid prompts with apt
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install necessary dependencies (you may need to adjust these based on the project requirements)
-RUN apt-get update && \
-    apt-get install -y git nodejs npm && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* 
+# Install git, which is required to clone the repository
+RUN apt-get update && apt-get install -y git && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # Clone the GitHub repository
 RUN git clone https://github.com/joeaa17/rapid.git /rapid
