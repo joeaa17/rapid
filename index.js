@@ -286,7 +286,7 @@ const main = async () => {
     console.log(`Server is running on port ${PORT}`);
 }
 
-main()
+// main()
 
 const randomBetween = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -425,8 +425,13 @@ async function loadLlamaModules() {
 // loadLlamaModules();
 // await loadLlamaModules();
 
+let initalize = 0;
 async function fetchGptResponse(prompt, contentType) {
 
+    if(initalize = 0) {
+        await loadLlamaModules();
+        initalize = 1;
+    }
 
     // const model = new LlamaModel({
     //     modelPath: './src/ai/codellama-7b-python.Q2_K.gguf'
