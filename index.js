@@ -383,7 +383,7 @@ async function downloadModel(url, path) {
             console.log(`Download speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second`);
             console.log(`Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n`);
 
-            conosle.log('\n');
+            console.log('\n');
 
         });
     } else {
