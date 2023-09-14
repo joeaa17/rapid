@@ -306,7 +306,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 256;
+const TOKENS_MAX = 128;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
