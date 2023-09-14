@@ -401,6 +401,7 @@ let model, context;
 
 let session;
 
+let filePath = '/var/data/model.gguf';
 
 async function loadLlamaModules() {
     const modelURL = 
@@ -417,7 +418,7 @@ async function loadLlamaModules() {
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q4_K_M.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
-    const filePath = '/var/data/model.gguf';
+    // filePath = '/var/data/model.gguf';
     // const filePath = './src/ai/model.gguf';
 
     try {
@@ -550,9 +551,23 @@ async function loadLlamaModules() {
 // loadLlamaModules();
 // await loadLlamaModules();
 
+
+// does the file from the filepath exists
+const fileExists = async (filePath) => {
+    try {
+        await fsPromises.access(filePath);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+
 async function fetchGptResponse(prompt, contentType) {
 
-    if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
+
+    // if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
+    if(fileExists(filePath) == false) {
         await loadLlamaModules();
         initalize = 1;
     }
