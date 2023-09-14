@@ -281,7 +281,7 @@ const main = async () => {
 
     console.log('loading...');
 
-    // await loadLlamaModules();
+    await loadLlamaModules();
     initalize = 1;
     
     // await NK.xpr.start(port);
