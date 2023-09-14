@@ -269,7 +269,7 @@ app.get('/scraper', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-    console.log('req', req.query);
+    // console.log('req', req.query);
 
     res.json({ success: 'Server is running' });
 })
