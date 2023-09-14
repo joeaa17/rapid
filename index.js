@@ -475,7 +475,7 @@ async function loadLlamaModules() {
 
 async function fetchGptResponse(prompt, contentType) {
 
-    if(initalize == 0 || !session) {
+    if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
         await loadLlamaModules();
         initalize = 1;
     }
