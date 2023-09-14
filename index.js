@@ -281,8 +281,8 @@ const main = async () => {
 
     console.log('loading...');
 
-    await loadLlamaModules();
-    initalize = 1;
+    // await loadLlamaModules();
+    // initalize = 1;
     
     // await NK.xpr.start(port);
     const PORT = process.env.PORT || 3000;
