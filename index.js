@@ -352,7 +352,8 @@ let session;
 
 async function loadLlamaModules() {
     const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
-    const filePath = './src/ai/model.gguf';
+    const filePath = '/var/data/model.gguf';
+    // const filePath = './src/ai/model.gguf';
 
     try {
         // Download the model
