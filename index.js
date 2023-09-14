@@ -1103,6 +1103,10 @@ app.get('/render-description', async (req, res) => {
     }
     
 });
+
+module.exports = app;
+
+
 // http://localhost:3000/render-description?contentType=&description=&referenceData=&referenceUrl=&cssQuery=&attributeNames=
 
 
