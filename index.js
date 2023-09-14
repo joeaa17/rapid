@@ -4,18 +4,18 @@ const app = express();
 
 
 
-const sharp = require( 'sharp');
+// const sharp = require( 'sharp');
 const axios = require( 'axios');
-const { imageTracer } = require( 'imagetracer')
-const { optimize } = require( 'svgo');
+// const { imageTracer } = require( 'imagetracer')
+// const { optimize } = require( 'svgo');
 
 const { promises: fsPromises } = require('fs');
 
 const nodemailer = require( 'nodemailer');
 
 const { JSDOM, VirtualConsole } = require('jsdom');
-const {WebScreenShot,WebPdf,valid_devices} = require('@sl-code-lords/web_screenshot')
-const web = require("web-screenshot.js")
+// const {WebScreenShot,WebPdf,valid_devices} = require('@sl-code-lords/web_screenshot')
+// const web = require("web-screenshot.js")
 
 
 const dotenv = require( 'dotenv');
