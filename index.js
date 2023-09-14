@@ -27,7 +27,6 @@ const { escape } = require('querystring');
 const filePath = '/var/data/model.gguf';
 
 
-
 const defaultOptions = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36', // Set a modern user agent
     runScripts: 'dangerously', // Run scripts on the page
@@ -399,6 +398,17 @@ async function downloadModel(url, path) {
 
 
 
+// does the file from the filepath exists
+async function fileExists (_filePath) {
+    try {
+        await fsPromises.access(_filePath);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+
 let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
 
 let model, context;
@@ -426,7 +436,10 @@ async function loadLlamaModules() {
 
     try {
         // Download the model
+    if(fileExists(filePath) == false) {
+
         await downloadModel(modelURL, filePath);
+    }
 
         const module = await import("node-llama-cpp");
         LlamaModel = module.LlamaModel;
@@ -556,25 +569,15 @@ async function loadLlamaModules() {
 // await loadLlamaModules();
 
 
-// does the file from the filepath exists
-const fileExists = async (_filePath) => {
-    try {
-        await fsPromises.access(_filePath);
-        return true;
-    } catch (error) {
-        return false;
-    }
-}
-
 
 async function fetchGptResponse(prompt, contentType) {
 
 
     // if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
-    if(fileExists(filePath) == false) {
+    // if(fileExists(filePath) == false) {
         await loadLlamaModules();
         // initalize = 1;
-    }
+    // }
 
     // const model = new LlamaModel({
     //     modelPath: './src/ai/codellama-7b-python.Q2_K.gguf'
