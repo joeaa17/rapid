@@ -428,7 +428,7 @@ async function loadLlamaModules() {
 let initalize = 0;
 async function fetchGptResponse(prompt, contentType) {
 
-    if(initalize = 0) {
+    if(initalize == 0) {
         await loadLlamaModules();
         initalize = 1;
     }
