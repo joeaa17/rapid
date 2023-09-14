@@ -359,11 +359,12 @@ let session;
 
 
 async function loadLlamaModules() {
-    const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
-
+    const modelURL = 
+    'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
+    
+    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
     //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
 
-    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
 
     
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
@@ -386,24 +387,24 @@ async function loadLlamaModules() {
         LlamaChatSession = module.LlamaChatSession;
 
         model = new LlamaModel({ modelPath: filePath,
-            // enableLogging: true,
-            // nCtx: 1024,
-            // seed: 0,
-            // f16Kv: false,
-            // logitsAll: false,
-            // vocabOnly: false,
-            // useMlock: false,
-            // embedding: false,
-            // useMmap: true,
-            // nGpuLayers: 0 
+            enableLogging: true,
+            nCtx: 1024,
+            seed: 0,
+            f16Kv: false,
+            logitsAll: false,
+            vocabOnly: false,
+            useMlock: false,
+            embedding: false,
+            useMmap: true,
+            nGpuLayers: 0 
         });
 
         context = new LlamaContext({
             model,
-            // mmap: false,
-            // gpu: false,
-            // maxTokens: 64,
-            // batchSize: 1
+            mmap: false,
+            gpu: false,
+            maxTokens: 64,
+            batchSize: 4
         });
 
         session = new LlamaChatSession({ context });
@@ -542,7 +543,18 @@ async function fetchGptResponse(prompt, contentType) {
 
     
 
-    return await session.prompt(prompt, {maxTokens: context.getContextSize()});
+    return await session.prompt(prompt, {
+        nThreads: 4,
+        maxTokens: context.getContextSize(),
+        temperature: 0.2,
+        topP: 0.1,
+        topK: 40,
+        repetitionPenalty: 1,
+        repetitionWindow: 64,
+        repetitionPenaltyRange: 512,
+        repetitionPenaltySlope: 3.33
+    });
+
 
 
 
