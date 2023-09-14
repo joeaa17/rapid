@@ -306,7 +306,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 1024;
+const TOKENS_MAX = 256;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -366,20 +366,24 @@ async function downloadModel(url, path) {
 
         let downloadedLength = 0;
         response.data.on('data', chunk => {
+
+            conosle.log('chunk', chunk);
+
             downloadedLength += chunk.length;
             const percentage = ((downloadedLength / totalLength) * 100).toFixed(2);
-            console.log(`Downloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)`);
-
+            console.log(`Downloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)\n`);
             const currentTime = new Date().getTime();
             const elapsedTime = (currentTime - downloadTime) / 1000;
             const estimatedTimeLeft = (totalLength - downloadedLength) / (downloadedLength / elapsedTime);
             console.log(`Estimated time left: ${estimatedTimeLeft.toFixed(2)} seconds`);
-            console.log(`Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes`);
+            console.log(`Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes\n`);
 
             const downloadSpeed = downloadedLength / elapsedTime;
             console.log(`Download speed: ${downloadSpeed.toFixed(2)} bytes per second`);
             console.log(`Download speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second`);
-            console.log(`Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second`);
+            console.log(`Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n`);
+
+            conosle.log('\n');
 
         });
     } else {
@@ -590,7 +594,7 @@ async function fetchGptResponse(prompt, contentType) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 16,
+        nThreads: 8,
         maxTokens: context.getContextSize()
     });
 
