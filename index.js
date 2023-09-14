@@ -530,7 +530,7 @@ async function fetchGptResponse(prompt, contentType) {
         prompt,
     };
 
-    return await llama.createCompletion(params);
+    return await session.createCompletion(params);
 
     
 
