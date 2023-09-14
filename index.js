@@ -359,7 +359,8 @@ let session;
 
 
 async function loadLlamaModules() {
-    const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
+    const modelURL = 
+    'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
     
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
 
@@ -381,23 +382,23 @@ async function loadLlamaModules() {
         LlamaChatSession = module.LlamaChatSession;
 
         model = new LlamaModel({ modelPath: filePath,
-            enableLogging: true,
-            nCtx: 1024,
-            seed: 0,
-            f16Kv: false,
-            logitsAll: false,
-            vocabOnly: false,
-            useMlock: false,
-            embedding: false,
-            useMmap: true,
-            nGpuLayers: 0 
+            // enableLogging: true,
+            // nCtx: 1024,
+            // seed: 0,
+            // f16Kv: false,
+            // logitsAll: false,
+            // vocabOnly: false,
+            // useMlock: false,
+            // embedding: false,
+            // useMmap: true,
+            // nGpuLayers: 0 
         });
 
         context = new LlamaContext({
             model,
-            mmap: false,
-            gpu: false,
-            maxTokens: 64,
+            // mmap: false,
+            // gpu: false,
+            // maxTokens: 64,
             // batchSize: 1
         });
 
