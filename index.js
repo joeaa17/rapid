@@ -24,6 +24,10 @@ const dotenv = require( 'dotenv');
 const { escape } = require('querystring');
 
 
+const filePath = '/var/data/model.gguf';
+
+
+
 const defaultOptions = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36', // Set a modern user agent
     runScripts: 'dangerously', // Run scripts on the page
@@ -401,7 +405,6 @@ let model, context;
 
 let session;
 
-const filePath = '/var/data/model.gguf';
 
 async function loadLlamaModules() {
     const modelURL = 
