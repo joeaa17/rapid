@@ -185,12 +185,12 @@ const getCSSSelectorByXPath = (xpath) => {
 
 app.get('/scraper', async (req, res) => {
 
-    if(req.content == null || req.content == '' || req.content.toLowerCase() == 'json' ||
-        req.content.toLowerCase() == 'html') {
-        let pageSource = await loadPageSource(req.url, req.navigate);
+    if(req.query.content == null || req.query.content == '' || req.query.content.toLowerCase() == 'json' ||
+        req.query.content.toLowerCase() == 'html') {
+        let pageSource = await loadPageSource(req.query.url, req.query.navigate);
         try {
-            if(req.content.toLowerCase() == 'html'){
-                const url = new URL(req.url);
+            if(req.query.content.toLowerCase() == 'html'){
+                const url = new URL(req.query.url);
                 const baseURI = `${url.protocol}//${url.hostname}/`;
 
                 pageSource = await replaceMissing(baseURI, pageSource);
@@ -227,7 +227,7 @@ app.get('/scraper', async (req, res) => {
                 res.set('Content-Type', 'text/html');
                 res.send(Buffer.from(pageSource, 'utf8'));
 
-            } else if(req.content.toLowerCase() == 'json') {
+            } else if(req.query.content.toLowerCase() == 'json') {
 
                 const formattedData = await parsePageSourceToJSON(pageSource);
                 res.json(formattedData);
@@ -237,24 +237,24 @@ app.get('/scraper', async (req, res) => {
             res.status(500).json({ error });
         }
     }
-    else if(req.content.toLowerCase() == 'pdf' ||
-            req.content.toLowerCase() == 'png') {
+    else if(req.query.content.toLowerCase() == 'pdf' ||
+            req.query.content.toLowerCase() == 'png') {
         try {
-            if(req.content.toLowerCase() == 'pdf'){
+            if(req.query.content.toLowerCase() == 'pdf'){
 
                 const portrait=true // false for landscape
                 const zoom = false // true
                 const print_size = false //true
                 
-                var pdf = await WebPdf(req.url,portrait,zoom,print_size)
+                var pdf = await WebPdf(req.query.url,portrait,zoom,print_size)
 
                 res.set('Content-Type', 'application/pdf');
                 res.send(pdf);
 
 
-            } else if(req.content.toLowerCase() == 'png'){
+            } else if(req.query.content.toLowerCase() == 'png'){
 
-                let image = await web.capture(req.url)
+                let image = await web.capture(req.query.url)
                 res.set('Content-Type', 'image/png');
                 res.send(image);
             }
@@ -847,25 +847,25 @@ const concatJSON = async (jsons) => {
 }
 
 app.get('/render-description', async (req, res) => {
-    const prompt = decodeURIComponent(req.description);
+    const prompt = decodeURIComponent(req.query.description);
     const contentType = 
-    sanatizeNCheckContentType(decodeURIComponent(req.contentType));
+    sanatizeNCheckContentType(decodeURIComponent(req.query.contentType));
 
-    const referenceUrl = decodeURIComponent(req.referenceUrl);
-    const referenceData = decodeURIComponent(req.referenceData);
-    const ignoreTags = decodeURIComponent(req.ignoreTags).split(',') || [];
+    const referenceUrl = decodeURIComponent(req.query.referenceUrl);
+    const referenceData = decodeURIComponent(req.query.referenceData);
+    const ignoreTags = decodeURIComponent(req.query.ignoreTags).split(',') || [];
 
     console.log('ignoreTags', ignoreTags);
     // process.exit()
 
     let formattedDataString = '';
-    if(req.referenceUrl && req.referenceUrl.length > 0) {
+    if(req.query.referenceUrl && req.query.referenceUrl.length > 0) {
         try {
-            let pageSource = await loadPageSource(referenceUrl, req.navigate);
+            let pageSource = await loadPageSource(referenceUrl, req.query.navigate);
 
             pageSource = pageSource.replace(/n\(.*?\)/g, '').replace(/;case"emoji":return!/g, '');
-            const filtered = req.cssQuery ?
-            await keepSelection(pageSource, getCSSSelectorByXPath(req.cssQuery)) :
+            const filtered = req.query.cssQuery ?
+            await keepSelection(pageSource, getCSSSelectorByXPath(req.query.cssQuery)) :
             pageSource;
 
             console.log('filtered', filtered);
@@ -875,7 +875,7 @@ app.get('/render-description', async (req, res) => {
                 return;
             }
             
-            const collect = req.attributeNames ? req.attributeNames.split(',') : [];
+            const collect = req.query.attributeNames ? req.query.attributeNames.split(',') : [];
 
             console.log('collect', collect);
 
