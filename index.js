@@ -306,7 +306,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 2048;
+const TOKENS_MAX = 512;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -394,8 +394,8 @@ async function loadLlamaModules() {
             model,
             mmap: false,
             gpu: false,
-            maxTokens: 128,
-            batchSize: 1
+            maxTokens: 64,
+            // batchSize: 1
         });
 
         session = new LlamaChatSession({ context });
@@ -997,17 +997,17 @@ app.get('/render-description', async (req, res) => {
     formattedDataString != 'undefined' &&
     formattedDataString.length > 0 ? `${formattedDataString}` : ''
 
-    const resultPrompt = prompt
-    // `Create a ${
-    //     contentType.split('/')[1].toLowerCase() == 'json' ? 
-    //     'JSON' : 
-    //     contentType.split('/')[0].toLowerCase() == 'application' ?
-    //     contentType.split('/')[1].toLowerCase() :
-    //     contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
-    // } code, ${prompt}`;
+    const resultPrompt = //prompt
+    `Generate ${
+        contentType.split('/')[1].toLowerCase() == 'json' ? 
+        'JSON' : 
+        contentType.split('/')[0].toLowerCase() == 'application' ?
+        contentType.split('/')[1].toLowerCase() :
+        contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
+    } code, ${prompt}`;
 
-    const dataFillString = ''
-    // ` this data: \n`
+    const dataFillString = //''
+    ` from this data: \n`
 
     const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
     let response = '';
