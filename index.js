@@ -437,8 +437,9 @@ async function loadLlamaModules() {
     try {
         // Download the model
     // if(fileExists(filePath) == false) {
-
-        await downloadModel(modelURL, filePath);
+        if(initalize == 0){
+            await downloadModel(modelURL, filePath);
+        }
     // }
 
         const module = await import("node-llama-cpp");
