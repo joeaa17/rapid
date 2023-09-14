@@ -520,21 +520,21 @@ async function fetchGptResponse(prompt, contentType) {
     
 
 
-    const params = {
-        nThreads: 4,
-        nTokPredict: 2048,
-        topK: 40,
-        topP: 0.1,
-        temp: 0.2,
-        repeatPenalty: 1,
-        prompt,
-    };
+    // const params = {
+    //     nThreads: 4,
+    //     nTokPredict: 2048,
+    //     topK: 40,
+    //     topP: 0.1,
+    //     temp: 0.2,
+    //     repeatPenalty: 1,
+    //     prompt,
+    // };
 
-    return await session.createCompletion(params);
+    // return await session.createCompletion(params);
 
     
 
-    // return await session.prompt(prompt, {maxTokens: context.getContextSize()});
+    return await session.prompt(prompt, {maxTokens: context.getContextSize()});
 
 
 
