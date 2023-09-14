@@ -336,6 +336,14 @@ async function downloadModel(url, path) {
     await fs.writeFile(path, new Buffer(response.data));
 }
 
+
+let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
+
+let model, context;
+
+let session;
+
+
 async function loadLlamaModules() {
     const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
     const filePath = './src/ai/model.gguf';
