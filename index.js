@@ -269,14 +269,19 @@ app.get('/scraper', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
+    // console.log('req', req.query);
+
     res.json({ success: 'Server is running' });
 })
+
+let initalize = 0;
+
 
 const main = async () => {
 
     console.log('loading...');
 
-    await loadLlamaModules();
+    // await loadLlamaModules();
     initalize = 1;
     
     // await NK.xpr.start(port);
@@ -286,7 +291,7 @@ const main = async () => {
         console.log(`Server is running on port ${PORT}`);
     });
 
-    console.log(`Server is running on port ${PORT}`);
+    // console.log(`Server is running on port ${PORT}`);
 }
 
 main()
@@ -428,7 +433,6 @@ async function loadLlamaModules() {
 // loadLlamaModules();
 // await loadLlamaModules();
 
-let initalize = 0;
 async function fetchGptResponse(prompt, contentType) {
 
     if(initalize == 0) {
