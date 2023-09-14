@@ -40,7 +40,7 @@
     "stream-buffers": "^3.0.2",
     "svgo": "^3.0.2",
     "url": "^0.11.2",
-    "glibc": "^2.29"
+    "@parcel/watcher-linux-x64-glibc": "^2.3.0"
   },
   "engines": {
     "node": ">=18.0.0"
