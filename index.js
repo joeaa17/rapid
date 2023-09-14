@@ -376,6 +376,11 @@ async function downloadModel(url, path) {
             console.log(`Estimated time left: ${estimatedTimeLeft.toFixed(2)} seconds`);
             console.log(`Estimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes`);
 
+            const downloadSpeed = downloadedLength / elapsedTime;
+            console.log(`Download speed: ${downloadSpeed.toFixed(2)} bytes per second`);
+            console.log(`Download speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second`);
+            console.log(`Download speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second`);
+
         });
     } else {
         console.log('Downloading data...');
@@ -430,7 +435,7 @@ async function loadLlamaModules() {
         model = new LlamaModel({ modelPath: filePath,
             // enableLogging: true,
             // nCtx: 1024,
-            seed: 0,
+            // seed: 0,
             // f16Kv: false,
             // logitsAll: false,
             // vocabOnly: false,
@@ -585,7 +590,7 @@ async function fetchGptResponse(prompt, contentType) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 4,
+        nThreads: 16,
         maxTokens: context.getContextSize()
     });
 
@@ -1051,17 +1056,17 @@ app.get('/render-description', async (req, res) => {
     formattedDataString != 'undefined' &&
     formattedDataString.length > 0 ? `${formattedDataString}` : ''
 
-    const resultPrompt = //prompt
-    `Generate ${
-        contentType.split('/')[1].toLowerCase() == 'json' ? 
-        'JSON' : 
-        contentType.split('/')[0].toLowerCase() == 'application' ?
-        contentType.split('/')[1].toLowerCase() :
-        contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
-    } code, ${prompt}`;
+    const resultPrompt = prompt
+    // `Generate ${
+    //     contentType.split('/')[1].toLowerCase() == 'json' ? 
+    //     'JSON' : 
+    //     contentType.split('/')[0].toLowerCase() == 'application' ?
+    //     contentType.split('/')[1].toLowerCase() :
+    //     contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
+    // } code, ${prompt}`;
 
-    const dataFillString = //''
-    ` from this data: \n`
+    const dataFillString = ''
+    // ` from this data: \n`
 
     const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
     let response = '';
