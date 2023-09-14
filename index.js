@@ -335,11 +335,19 @@ const Q = 1.618033988749895;
 // loadBard();
 
 
+const fs = require('fs');
 
-const fs = require('fs').promises;
 async function downloadModel(url, path) {
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    await fs.writeFile(path, new Buffer(response.data));
+    const response = await axios.get(url, {
+        responseType: 'stream'
+    });
+
+    return new Promise((resolve, reject) => {
+        const fileStream = fs.createWriteStream(path);
+        response.data.pipe(fileStream);
+        fileStream.on('finish', resolve);
+        fileStream.on('error', reject);
+    });
 }
 
 
@@ -351,7 +359,8 @@ let session;
 
 
 async function loadLlamaModules() {
-    const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q2_K.gguf'
+    const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
+    // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q2_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q4_K_M.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
