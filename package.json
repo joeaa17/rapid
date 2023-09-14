@@ -14,8 +14,6 @@
     "semi": false
   },
   "dependencies": {
-    "@akash3080/html-to-pdf-node": "^1.0.3",
-    "@sl-code-lords/web_screenshot": "^0.0.1-dev",
     "@svgdotjs/svg.js": "^3.2.0",
     "axios": "^1.4.0",
     "blob-stream": "^0.1.3",
@@ -25,7 +23,6 @@
     "eslint": "^8.47.0",
     "execa": "^8.0.1",
     "fs": "^0.0.1-security",
-    "gnodejs": "^2.1.2",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "imagetracer": "^0.2.2",
@@ -43,7 +40,6 @@
     "shelljs": "^0.8.5",
     "stream-buffers": "^3.0.2",
     "svgo": "^3.0.2",
-    "url": "^0.11.2",
-    "web-screenshot.js": "^1.0.3"
+    "url": "^0.11.2"
   }
 }
