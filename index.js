@@ -431,7 +431,8 @@ async function loadLlamaModules() {
         LlamaContext = module.LlamaContext;
         LlamaChatSession = module.LlamaChatSession;
 
-        model = new LlamaModel({ modelPath: filePath,
+        model = new LlamaModel({ 
+            modelPath: filePath,
             // enableLogging: true,
             // nCtx: 1024,
             // seed: 0,
@@ -457,7 +458,7 @@ async function loadLlamaModules() {
         console.error("Failed to load module: ", error);
     }
 
-    return { model, context, session };
+    // return { model, context, session };
 }
 
 
