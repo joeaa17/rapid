@@ -360,10 +360,10 @@ let session;
 
 async function loadLlamaModules() {
     const modelURL = 
-    'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
+     'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
+    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
     
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
-    //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
 
 
     
@@ -403,8 +403,8 @@ async function loadLlamaModules() {
             model,
             mmap: false,
             gpu: false,
-            maxTokens: 64,
-            batchSize: 4
+            // maxTokens: 64,
+            // batchSize: 4
         });
 
         session = new LlamaChatSession({ context });
@@ -545,14 +545,7 @@ async function fetchGptResponse(prompt, contentType) {
 
     return await session.prompt(prompt, {
         nThreads: 4,
-        maxTokens: context.getContextSize(),
-        temperature: 0.2,
-        topP: 0.1,
-        topK: 40,
-        repetitionPenalty: 1,
-        repetitionWindow: 64,
-        repetitionPenaltyRange: 512,
-        repetitionPenaltySlope: 3.33
+        maxTokens: context.getContextSize()
     });
 
 
