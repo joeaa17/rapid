@@ -336,67 +336,27 @@ const Q = 1.618033988749895;
 
 
 
-// const fs = require('fs').promises;
-// async function downloadModel(url, path) {
-//     const response = await axios.get(url, { responseType: 'arraybuffer' });
-//     await fs.writeFile(path, new Buffer(response.data));
-// }
-
-
-// let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
-
-// let model, context;
-
-// let session;
-
-
-// async function loadLlamaModules() {
-//     const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
-//     const filePath = './src/ai/model.gguf';
-
-//     try {
-//         // Download the model
-//         await downloadModel(modelURL, filePath);
-
-//         const module = await import("node-llama-cpp");
-//         LlamaModel = module.LlamaModel;
-//         LlamaGrammar = module.LlamaGrammar;
-//         LlamaContext = module.LlamaContext;
-//         LlamaChatSession = module.LlamaChatSession;
-
-//         model = new LlamaModel({ modelPath: filePath });
-//         context = new LlamaContext({
-//             model,
-//             mmap: false,
-//             gpu: false,
-//             maxTokens: 8,
-//             batchSize: 1
-//         });
-
-//         session = new LlamaChatSession({ context });
-//     } catch (error) {
-//         console.error("Failed to load module: ", error);
-//     }
-
-//     return { model, context, session };
-// }
-
+const fs = require('fs').promises;
+async function downloadModel(url, path) {
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    await fs.writeFile(path, new Buffer(response.data));
+}
 
 
 let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
+
 let model, context;
+
 let session;
 
-async function downloadModel(url) {
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    return new Buffer(response.data);
-}
 
 async function loadLlamaModules() {
     const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
+    const filePath = './src/ai/model.gguf';
 
     try {
-        const modelBuffer = await downloadModel(modelURL);
+        // Download the model
+        await downloadModel(modelURL, filePath);
 
         const module = await import("node-llama-cpp");
         LlamaModel = module.LlamaModel;
@@ -404,7 +364,7 @@ async function loadLlamaModules() {
         LlamaContext = module.LlamaContext;
         LlamaChatSession = module.LlamaChatSession;
 
-        model = new LlamaModel({ modelBuffer });  // This is speculative!
+        model = new LlamaModel({ modelPath: filePath });
         context = new LlamaContext({
             model,
             mmap: false,
@@ -420,6 +380,46 @@ async function loadLlamaModules() {
 
     return { model, context, session };
 }
+
+
+
+// let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
+// let model, context;
+// let session;
+
+// async function downloadModel(url) {
+//     const response = await axios.get(url, { responseType: 'arraybuffer' });
+//     return new Buffer(response.data);
+// }
+
+// async function loadLlamaModules() {
+//     const modelURL = 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
+
+//     try {
+//         const modelBuffer = await downloadModel(modelURL);
+
+//         const module = await import("node-llama-cpp");
+//         LlamaModel = module.LlamaModel;
+//         LlamaGrammar = module.LlamaGrammar;
+//         LlamaContext = module.LlamaContext;
+//         LlamaChatSession = module.LlamaChatSession;
+
+//         model = new LlamaModel({ modelBuffer });  // This is speculative!
+//         context = new LlamaContext({
+//             model,
+//             mmap: false,
+//             gpu: false,
+//             maxTokens: 8,
+//             batchSize: 1
+//         });
+
+//         session = new LlamaChatSession({ context });
+//     } catch (error) {
+//         console.error("Failed to load module: ", error);
+//     }
+
+//     return { model, context, session };
+// }
 
 
 
@@ -474,7 +474,7 @@ async function loadLlamaModules() {
 
 async function fetchGptResponse(prompt, contentType) {
 
-    if(initalize == 0) {
+    if(initalize == 0 || !session) {
         await loadLlamaModules();
         initalize = 1;
     }
