@@ -269,7 +269,7 @@ app.get('/scraper', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-    // console.log('req', req.query);
+    console.log('req', req.query);
 
     res.json({ success: 'Server is running' });
 })
@@ -859,13 +859,19 @@ app.get('/render-description', async (req, res) => {
 
     const referenceUrl = decodeURIComponent(req.query.referenceUrl);
     const referenceData = decodeURIComponent(req.query.referenceData);
-    const ignoreTags = decodeURIComponent(req.query.ignoreTags).split(',') || [];
-
+    
+    let ignoreTags = decodeURIComponent(req.query.ignoreTags).split(',');
+    ignoreTags = ignoreTags == null || ignoreTags == '' || ignoreTags == undefined || ignoreTags == 'undefined' ? [] : ignoreTags;
+    
+    console.log('prompt', prompt);
+    console.log('contentType', contentType);
+    console.log('referenceUrl', referenceUrl);
+    console.log('referenceData', referenceData);
+    
     console.log('ignoreTags', ignoreTags);
-    // process.exit()
 
     let formattedDataString = '';
-    if(req.query.referenceUrl && req.query.referenceUrl.length > 0) {
+    if(referenceUrl && referenceUrl.length > 0) {
         try {
             let pageSource = await loadPageSource(referenceUrl, req.query.navigate);
 
@@ -894,7 +900,7 @@ app.get('/render-description', async (req, res) => {
 
             console.log('markdown', markdown);
 
-            formattedDataString = JSON.stringify(markdown) + ' ';
+            formattedDataString = (markdown) + ' ';
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Invalid referenceUrl' });
@@ -911,14 +917,14 @@ app.get('/render-description', async (req, res) => {
     formattedDataString != 'undefined' &&
     formattedDataString.length > 0 ? `${formattedDataString}` : ''
 
-    const resultPrompt = prompt
-    // `Create a ${
-    //     contentType.split('/')[1].toLowerCase() == 'json' ? 
-    //     'JSON' : 
-    //     contentType.split('/')[0].toLowerCase() == 'application' ?
-    //     contentType.split('/')[1].toLowerCase() :
-    //     contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
-    // } code, ${prompt}`;
+    const resultPrompt = //prompt
+    `Create a ${
+        contentType.split('/')[1].toLowerCase() == 'json' ? 
+        'JSON' : 
+        contentType.split('/')[0].toLowerCase() == 'application' ?
+        contentType.split('/')[1].toLowerCase() :
+        contentType.split('/')[0].toLowerCase() +" "+ contentType.split('/')[1].toLowerCase()
+    } code, ${prompt}`;
 
     const dataFillString =
     ` this data: \n`
@@ -942,7 +948,7 @@ app.get('/render-description', async (req, res) => {
         dataFillString +
         extraPrompt.substr(length, increment) : ''
 
-        resultPromptTemp = resultPromptTemp
+        // resultPromptTemp = resultPromptTemp
         // .replace(/\s+/g, ' ').trim();
 
         console.log('resultPromptTemp', resultPromptTemp, resultPromptTemp.length);
