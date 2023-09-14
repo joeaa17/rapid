@@ -573,12 +573,12 @@ async function loadLlamaModules() {
 async function fetchGptResponse(prompt, contentType) {
 
 
-    // if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
+    if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
     // if(fileExists(filePath) == false) {
 
-    if(fileExists(filePath) == false) {
+    // if(fileExists(filePath) == false) {
         await loadLlamaModules();
-        // initalize = 1;
+        initalize = 1;
     }
 
     // const model = new LlamaModel({
