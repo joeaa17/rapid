@@ -436,10 +436,10 @@ async function loadLlamaModules() {
 
     try {
         // Download the model
-    if(fileExists(filePath) == false) {
+    // if(fileExists(filePath) == false) {
 
         await downloadModel(modelURL, filePath);
-    }
+    // }
 
         const module = await import("node-llama-cpp");
         LlamaModel = module.LlamaModel;
@@ -575,9 +575,11 @@ async function fetchGptResponse(prompt, contentType) {
 
     // if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
     // if(fileExists(filePath) == false) {
+
+    if(fileExists(filePath) == false) {
         await loadLlamaModules();
         // initalize = 1;
-    // }
+    }
 
     // const model = new LlamaModel({
     //     modelPath: './src/ai/codellama-7b-python.Q2_K.gguf'
