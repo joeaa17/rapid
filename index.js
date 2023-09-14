@@ -308,7 +308,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 128;
+const TOKENS_MAX = 96;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -412,7 +412,7 @@ let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
 
 let model, context;
 
-let session;
+// let session;
 
 
 async function loadLlamaModules() {
@@ -469,7 +469,7 @@ async function loadLlamaModules() {
             // batchSize: 4
         });
 
-        session = new LlamaChatSession({ context });
+        // session = new LlamaChatSession({ context });
     } catch (error) {
         console.error("Failed to load module: ", error);
     }
@@ -570,7 +570,7 @@ async function loadLlamaModules() {
 
 
 
-async function fetchGptResponse(prompt, contentType) {
+async function fetchGptResponse(prompt, contentType, session) {
 
 
     if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
@@ -1099,6 +1099,8 @@ app.get('/render-description', async (req, res) => {
 
     const shiftIncrement = parseInt(increment * 0.1)
 
+    let session = new LlamaChatSession({ context });
+
     let arrayCount = 0;
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
@@ -1127,7 +1129,8 @@ app.get('/render-description', async (req, res) => {
                 code =
                 await fetchGptResponse(
                     resultPromptTemp,
-                    contentType
+                    contentType,
+                    session
                 );
 
                 console.log('code >>>>>>>>>>>> ', code);
