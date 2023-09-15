@@ -408,9 +408,9 @@ async function fileExists(_filePath) {
 
 
 
-let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
+// let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
 
-let model;
+// let model;
 
 // let context;
 // let session;
@@ -434,6 +434,11 @@ async function loadLlamaModules() {
     // filePath = '/var/data/model.gguf';
     // const filePath = './src/ai/model.gguf';
 
+
+    let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
+
+    let model;
+    
     let session = null;
     let context = null;
     try {
@@ -1104,7 +1109,7 @@ app.get('/render-description', async (req, res) => {
 
     const shiftIncrement = parseInt(increment * 0.1)
 
-    const {session, context} = loadLlamaModules()
+    const {session, context} = await loadLlamaModules()
 
     let arrayCount = 0;
     let length = 0
