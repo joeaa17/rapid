@@ -477,7 +477,7 @@ async function loadLlamaModules() {
 
         model = new LlamaModel({ 
             modelPath: filePath,
-            // enableLogging: true,
+            enableLogging: true,
             // nCtx: 1024,
             // seed: 0,
             // f16Kv: false,
