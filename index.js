@@ -276,7 +276,11 @@ app.get('/scraper', async (req, res) => {
 app.get('/', async (req, res) => {
     // console.log('req', req.query);
 
-    res.json({ success: 'Server is running' });
+    // res.json({ success: 'Server is running' });
+
+    res.sendFile('./public/index.html');
+
+
 })
 
 
@@ -309,7 +313,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 1024;
+const TOKENS_MAX = 64;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -623,7 +627,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 32,
+        nThreads: 6,
         maxTokens: context.getContextSize(),
     });
 
@@ -1131,7 +1135,7 @@ app.get('/render-description', async (req, res) => {
         console.log('resultPromptTemp', resultPromptTemp, resultPromptTemp.length);
         // process.exit()
 
-        if(resultPromptTemp.length > parseInt(TOKENS_MAX)) {
+        if(resultPromptTemp.length > parseInt(TOKENS_MAX*Q)) {
             res.status(500).json({ error: 'Prompt is too long' });  
             return;  
         }
