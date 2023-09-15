@@ -474,6 +474,8 @@ async function loadLlamaModules() {
         console.error("Failed to load module: ", error);
     }
 
+    return session;
+
     // return { model, context, session };
 }
 
@@ -1099,7 +1101,7 @@ app.get('/render-description', async (req, res) => {
 
     const shiftIncrement = parseInt(increment * 0.1)
 
-    let session = new LlamaChatSession({ context });
+    let session = loadLlamaModules()
 
     let arrayCount = 0;
     let length = 0
