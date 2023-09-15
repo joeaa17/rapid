@@ -641,26 +641,29 @@ async function fetchGptResponse(prompt, contentType, session, context) {
 
     
 
-    let responseCompletion = false
-    let response = ''
+    // let responseCompletion = false
+    let result = ''
 
     await session.prompt(prompt, {
         nThreads: 8,
         // repeatPenalty: 1,
         maxTokens: context.getContextSize(),
     }, (response) => {
-                process.stdout.write(response.token);
+                // process.stdout.write(response.token);
+
+                console.log(response);
             
-                response += response.token;
+                result = response;
+                // response += response.token;
     });
     
-    responseCompletion = true
+    // responseCompletion = true
     
-    while(!responseCompletion) {
-        await new Promise(r => setTimeout(r, 10*1000));
-    }
+    // while(!responseCompletion) {
+    //     await new Promise(r => setTimeout(r, 10*1000));
+    // }
 
-    return response;
+    return result;
 
 
     // return await session.prompt(prompt, {
@@ -1169,7 +1172,12 @@ app.get('/render-description', async (req, res) => {
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
-        let resultPromptTemp = resultPrompt + `\nDATA chunk `
+        let resultPromptTemp = resultPrompt 
+        
+        if(extraPrompt.length > 0){
+            resultPromptTemp += `\nDATA chunk `
+        }
+
         // let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
         // if(length > 0) {
