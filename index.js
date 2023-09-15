@@ -1101,7 +1101,7 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX) /*- resultPrompt.length*/ - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
