@@ -25,8 +25,8 @@ const { escape } = require('querystring');
 
 
 let initalize = 0;
-const filePath = './src/ai/model.gguf';
-// const filePath = '/var/data/model.gguf';
+// const filePath = './src/ai/model.gguf';
+const filePath = '/var/data/model.gguf';
 
 
 const defaultOptions = {
@@ -410,8 +410,9 @@ async function fileExists(_filePath) {
 
 let LlamaModel, LlamaGrammar, LlamaContext, LlamaChatSession;
 
-let model, context;
+let model;
 
+// let context;
 // let session;
 
 
@@ -434,6 +435,7 @@ async function loadLlamaModules() {
     // const filePath = './src/ai/model.gguf';
 
     let session = null;
+    let context = null;
     try {
         // Download the model
         if(initalize == 0){
