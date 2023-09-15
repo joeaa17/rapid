@@ -1100,7 +1100,7 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
@@ -1116,10 +1116,13 @@ app.get('/render-description', async (req, res) => {
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
         let resultPromptTemp = resultPrompt;
-        resultPromptTemp +=
-        extraPrompt.length > 0 ?
-        dataFillString +
-        extraPrompt.substr(length, increment) : ''
+
+        if(length > 0) {
+            resultPromptTemp +=
+            extraPrompt.length > 0 ?
+            dataFillString +
+            extraPrompt.substr(length, increment) : ''
+        }
 
         // resultPromptTemp = resultPromptTemp
         // .replace(/\s+/g, ' ').trim();
