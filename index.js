@@ -1115,7 +1115,7 @@ app.get('/render-description', async (req, res) => {
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
-        let resultPromptTemp = resultPrompt;
+        let resultPromptTemp = length == 0 ? resultPrompt : 'DATA:\n'
 
         if(length > 0) {
             resultPromptTemp +=
