@@ -1100,14 +1100,14 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX) /*- resultPrompt.length*/ - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
         response = '{}';
     }
 
-    const shiftIncrement = parseInt(increment * 0.1)
+    const shiftIncrement = 0;//parseInt(increment * 0.1)
 
     const {session, context} = await loadLlamaModules()
 
@@ -1130,7 +1130,7 @@ app.get('/render-description', async (req, res) => {
         console.log('resultPromptTemp', resultPromptTemp, resultPromptTemp.length);
         // process.exit()
 
-        if(resultPromptTemp.length > TOKENS_MAX) {
+        if(resultPromptTemp.length > parseInt(TOKENS_MAX)) {
             res.status(500).json({ error: 'Prompt is too long' });  
             return;  
         }
