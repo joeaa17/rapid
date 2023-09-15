@@ -1143,6 +1143,10 @@ app.get('/render-description', async (req, res) => {
         let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
         if(length > 0) {
+            resultPromptTemp += `(${++countChunks}/${totalChunks}):\n`
+        }
+
+        if(length > 0) {
             resultPromptTemp +=
             extraPrompt.length > 0 ?
             dataFillString +
@@ -1160,10 +1164,6 @@ app.get('/render-description', async (req, res) => {
             return;  
         }
         else {
-
-            if(length > 0) {
-                resultPromptTemp += `(${++countChunks}/${totalChunks}):\n`
-            }
 
             let code = ''
 
