@@ -475,7 +475,7 @@ async function loadLlamaModules() {
         console.error("Failed to load module: ", error);
     }
 
-    return session;
+    return {session, context};
 
     // return { model, context, session };
 }
@@ -573,7 +573,7 @@ async function loadLlamaModules() {
 
 
 
-async function fetchGptResponse(prompt, contentType, session) {
+async function fetchGptResponse(prompt, contentType, session, context) {
 
 
     if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
@@ -1102,7 +1102,7 @@ app.get('/render-description', async (req, res) => {
 
     const shiftIncrement = parseInt(increment * 0.1)
 
-    let session = loadLlamaModules()
+    const {session, context} = loadLlamaModules()
 
     let arrayCount = 0;
     let length = 0
@@ -1133,7 +1133,8 @@ app.get('/render-description', async (req, res) => {
                 await fetchGptResponse(
                     resultPromptTemp,
                     contentType,
-                    session
+                    session,
+                    context
                 );
 
                 console.log('code >>>>>>>>>>>> ', code);
