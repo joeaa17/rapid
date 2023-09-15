@@ -309,7 +309,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 256;
+const TOKENS_MAX = 1024;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -623,7 +623,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 16,
+        nThreads: 32,
         maxTokens: context.getContextSize(),
     });
 
@@ -1343,3 +1343,8 @@ module.exports = app;
 
 
 
+
+
+// https://rapid-xbzq.onrender.com/render-description/?contentType=application/json&description=Can%20you%20organize%20the%20DATA%20passed%20in%20chunks%20into%20a%20JSON%20object?&referenceUrl=https://coinmarketcap.com&cssQuery=/html/body/div%5B1%5D/div%5B2%5D/div%5B1%5D/div%5B2%5D/div/div%5B1%5D/div%5B4%5D/table/tbody/tr%5B1%5D
+
+// https://rapid-xbzq.onrender.com/render-description?contentType=text/html&description=Can%20you%20summarize%20the%20DATA%20passed%20in%20chunks%20into%20an%20HTML20response?&referenceUrl=https://www.bbc.com/news/world-asia-66737052&ignoreTags=head,script,style
