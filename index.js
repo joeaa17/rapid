@@ -308,7 +308,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 256;
+const TOKENS_MAX = 128;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -465,8 +465,8 @@ async function loadLlamaModules() {
             model,
             // mmap: false,
             // gpu: false,
-            maxTokens: 64,
-            batchSize: 4
+            // maxTokens: 64,
+            // batchSize: 4
         });
 
         // session = new LlamaChatSession({ context });
@@ -612,7 +612,7 @@ async function fetchGptResponse(prompt, contentType, session) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 8,
+        nThreads: 4,
         maxTokens: context.getContextSize(),
     });
 
@@ -1185,9 +1185,9 @@ app.get('/render-description', async (req, res) => {
                         try {
                             return JSON.parse(brokenJson);
                         } catch (e) {
-                        let sanitizedJson = brokenJson;
-                        
-                        for(const possibleJsonEnd of possibleJsonEnds) {
+                            let sanitizedJson = brokenJson;
+                            
+                            for(const possibleJsonEnd of possibleJsonEnds) {
 
                                 try {
                                     return JSON.parse(sanitizedJson + possibleJsonEnd);
@@ -1323,3 +1323,8 @@ module.exports = app;
 // http://localhost:3000/render-description?contentType=text/html&description=summary&referenceUrl=https://www.bbc.com/news/world-asia-66737052&ignoreTags=head,script,style
 
 // http://localhost:3000/render-description?contentType=text/html&description=summary&referenceUrl=https://www.state.gov/countries-areas/lebanon/&ignoreTags=head,script,style
+
+
+
+
+
