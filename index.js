@@ -433,6 +433,7 @@ async function loadLlamaModules() {
     // filePath = '/var/data/model.gguf';
     // const filePath = './src/ai/model.gguf';
 
+    let session = null;
     try {
         // Download the model
         if(initalize == 0){
@@ -469,7 +470,7 @@ async function loadLlamaModules() {
             // batchSize: 4
         });
 
-        // session = new LlamaChatSession({ context });
+        session = new LlamaChatSession({ context });
     } catch (error) {
         console.error("Failed to load module: ", error);
     }
