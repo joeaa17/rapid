@@ -330,7 +330,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 256;
+const TOKENS_MAX = 96;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -438,12 +438,13 @@ async function fileExists(_filePath) {
 
 async function loadLlamaModules() {
     const modelURL = 
-    'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
+    'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
+
+    // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
 
     //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
     
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
-    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
     
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q2_K.gguf'
@@ -479,7 +480,7 @@ async function loadLlamaModules() {
             modelPath: filePath,
             // enableLogging: true,
             // nCtx: 1024,
-            // seed: 0,
+            seed: 0,
             // f16Kv: false,
             // logitsAll: false,
             // vocabOnly: false,
@@ -642,7 +643,8 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 6,
+        nThreads: 4,
+        repeatPenalty: 1,
         maxTokens: context.getContextSize(),
     });
 
