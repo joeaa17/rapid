@@ -622,7 +622,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 4,
+        nThreads: 16,
         maxTokens: context.getContextSize(),
     });
 
@@ -1130,7 +1130,7 @@ app.get('/render-description', async (req, res) => {
         console.log('resultPromptTemp', resultPromptTemp, resultPromptTemp.length);
         // process.exit()
 
-        if(resultPromptTemp.length > parseInt(TOKENS_MAX/Q)) {
+        if(resultPromptTemp.length > TOKENS_MAX) {
             res.status(500).json({ error: 'Prompt is too long' });  
             return;  
         }
