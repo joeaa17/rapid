@@ -400,7 +400,11 @@ async function downloadModel(url, path) {
             const estimatedTimeLeft = (totalLength - downloadedLength) / (downloadedLength / elapsedTime);
             const downloadSpeed = downloadedLength / elapsedTime;
             
-            console.log(`count: ${count++}\nDownloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)\nEstimated time left: ${estimatedTimeLeft.toFixed(2)} seconds\nEstimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes\nDownload speed: ${downloadSpeed.toFixed(2)} bytes per second\nDownload speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second\nDownload speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n\n`);
+            if(count % 100 == 0){
+                console.log(`count: ${count}\nDownloaded ${downloadedLength} bytes out of ${totalLength} bytes (${percentage}%)\nEstimated time left: ${estimatedTimeLeft.toFixed(2)} seconds\nEstimated time left: ${(estimatedTimeLeft / 60).toFixed(2)} minutes\nDownload speed: ${downloadSpeed.toFixed(2)} bytes per second\nDownload speed: ${(downloadSpeed / 1024).toFixed(2)} kilobytes per second\nDownload speed: ${(downloadSpeed / 1024 / 1024).toFixed(2)} megabytes per second\n\n`);
+            }
+            
+            count++
 
         });
     } else {
@@ -642,35 +646,35 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     // let responseCompletion = false
-    let result = ''
+    // let result = ''
 
-    await session.prompt(prompt, {
-        nThreads: 8,
-        // repeatPenalty: 1,
-        maxTokens: context.getContextSize(),
-    }, (response) => {
-                // process.stdout.write(response.token);
-
-                console.log(response);
-            
-                result = response;
-                // response += response.token;
-    });
-    
-    // responseCompletion = true
-    
-    // while(!responseCompletion) {
-    //     await new Promise(r => setTimeout(r, 10*1000));
-    // }
-
-    return result;
-
-
-    // return await session.prompt(prompt, {
+    // await session.prompt(prompt, {
     //     nThreads: 8,
     //     // repeatPenalty: 1,
     //     maxTokens: context.getContextSize(),
+    // }, (response) => {
+    //             // process.stdout.write(response.token);
+
+    //             console.log(response);
+            
+    //             result = response;
+    //             // response += response.token;
     // });
+    
+    // // responseCompletion = true
+    
+    // // while(!responseCompletion) {
+    // //     await new Promise(r => setTimeout(r, 10*1000));
+    // // }
+
+    // return result;
+
+
+    return await session.prompt(prompt, {
+        nThreads: 8,
+        // repeatPenalty: 1,
+        maxTokens: context.getContextSize(),
+    });
 
 
 
@@ -1176,12 +1180,12 @@ app.get('/render-description', async (req, res) => {
         
         if(extraPrompt.length > 0){
             resultPromptTemp += `\nDATA chunk `
+            resultPromptTemp += `(${++countChunks}/${totalChunks}): `
         }
 
         // let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
         // if(length > 0) {
-            resultPromptTemp += `(${++countChunks}/${totalChunks}):\n`
         // }
 
         // if(length > 0) {
@@ -1194,7 +1198,7 @@ app.get('/render-description', async (req, res) => {
         // resultPromptTemp = resultPromptTemp
         // .replace(/\s+/g, ' ').trim();
 
-        console.log('resultPromptTemp', resultPromptTemp, resultPromptTemp.length);
+        console.log('resultPromptTemp', resultPromptTemp, "Prompt Length:", resultPromptTemp.length);
         // process.exit()
 
         if(resultPromptTemp.length > parseInt(TOKENS_MAX*Q)) {
