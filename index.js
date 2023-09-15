@@ -393,7 +393,6 @@ async function downloadModel(url, path) {
         let downloadedLength = 0;
         response.data.on('data', chunk => {
 
-            
             downloadedLength += chunk.length;
             const percentage = ((downloadedLength / totalLength) * 100).toFixed(2);
             const currentTime = new Date().getTime();
@@ -439,12 +438,14 @@ async function fileExists(_filePath) {
 
 async function loadLlamaModules() {
     const modelURL = 
-    'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
+    'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
+
     //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf'
     
-     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
+    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
     
+    // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q2_K.gguf'
 
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q4_K_M.gguf'
