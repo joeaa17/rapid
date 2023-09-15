@@ -330,7 +330,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 96;
+const TOKENS_MAX = 256;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -479,7 +479,7 @@ async function loadLlamaModules() {
             modelPath: filePath,
             // enableLogging: true,
             // nCtx: 1024,
-            seed: 0,
+            seed: 1,
             // f16Kv: false,
             // logitsAll: false,
             // vocabOnly: false,
@@ -1121,7 +1121,7 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
@@ -1139,7 +1139,7 @@ app.get('/render-description', async (req, res) => {
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
-        let resultPromptTemp = resultPrompt + ` DATA chunk `
+        let resultPromptTemp = resultPrompt + `\nDATA chunk `
         // let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
         // if(length > 0) {
