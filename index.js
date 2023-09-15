@@ -330,7 +330,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 64;
+const TOKENS_MAX = 256;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -1133,11 +1133,14 @@ app.get('/render-description', async (req, res) => {
 
     const {session, context} = await loadLlamaModules()
 
+    let countChunks = 0;
+    let totalChunks = Math.ceil(extraPrompt.length / (increment - shiftIncrement));
+
     let arrayCount = 0;
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
-        let resultPromptTemp = length == 0 ? resultPrompt : 'DATA:\n'
+        let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
         if(length > 0) {
             resultPromptTemp +=
@@ -1157,6 +1160,10 @@ app.get('/render-description', async (req, res) => {
             return;  
         }
         else {
+
+            if(length > 0) {
+                resultPromptTemp += `(${++countChunks}/${totalChunks}):\n`
+            }
 
             let code = ''
 
