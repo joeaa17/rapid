@@ -1,6 +1,23 @@
 // const NK = require( 'gnodejs');
 const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
 const app = express();
+
+// Enhance your app security with Helmet
+app.use(helmet());
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Setup CORS to allow requests only from the same domain
+const corsOptions = {
+  origin: 'http://localhost:3000',  // or your domain name
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
