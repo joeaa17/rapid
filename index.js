@@ -330,7 +330,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 128;
+const TOKENS_MAX = 96;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -642,7 +642,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     
 
     return await session.prompt(prompt, {
-        nThreads: 8,
+        nThreads: 4,
         // repeatPenalty: 1,
         maxTokens: context.getContextSize(),
     });
@@ -1121,7 +1121,7 @@ app.get('/render-description', async (req, res) => {
     const dataFillString = ''
     // ` from this data: \n`
 
-    const increment = parseInt(TOKENS_MAX/Q) /*- resultPrompt.length*/ - (dataFillString).length
+    const increment = parseInt(TOKENS_MAX/Q) - resultPrompt.length - (dataFillString).length
     let response = '';
 
     if(contentType == 'application/json') {
@@ -1139,18 +1139,19 @@ app.get('/render-description', async (req, res) => {
     let length = 0
     for(; length == 0 || length < extraPrompt.length; length += increment - shiftIncrement) {
 
-        let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
+        let resultPromptTemp = resultPrompt + ` DATA chunk `
+        // let resultPromptTemp = length == 0 ? resultPrompt : `DATA chunk `
 
-        if(length > 0) {
+        // if(length > 0) {
             resultPromptTemp += `(${++countChunks}/${totalChunks}):\n`
-        }
+        // }
 
-        if(length > 0) {
+        // if(length > 0) {
             resultPromptTemp +=
             extraPrompt.length > 0 ?
             dataFillString +
             extraPrompt.substr(length, increment) : ''
-        }
+        // }
 
         // resultPromptTemp = resultPromptTemp
         // .replace(/\s+/g, ' ').trim();
