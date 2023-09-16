@@ -1167,7 +1167,7 @@ app.get('/render-description', async (req, res) => {
 
     const shiftIncrement = 0;//parseInt(increment * 0.1)
 
-    const {session, context} = await loadLlamaModules()
+    // const {session, context} = await loadLlamaModules()
 
     let countChunks = 0;
     let totalChunks = Math.ceil(extraPrompt.length / (increment - shiftIncrement));
@@ -1206,9 +1206,9 @@ app.get('/render-description', async (req, res) => {
             return;  
         }
         else {
-
+          
+            const {session, context} = await loadLlamaModules()
             let code = ''
-
             try {
                 code =
                 await fetchGptResponse(
