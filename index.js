@@ -1136,9 +1136,15 @@ app.post('/get-file', async (req, res) => {
     });
 
     renderDescription(_req, filePath);
+
+
+    // const buffer = fs.readFileSync(filePath);
+    // res.send(buffer);
+
+    // res.sendFile(filePath);
     
-    const buffer = fs.readFileSync(filePath);
-    res.send(buffer);
+    res.download(filePath);
+
 })
 
 const renderDescription = async (req, _filePath) => {
