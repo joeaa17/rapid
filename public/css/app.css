@@ -1,0 +1,18 @@
+* {
+    display: block;
+    float: left;
+    width: calc(100% - 10px);
+    margin: 5px;
+}
+
+.tabs > button {
+    width: calc(50% - 10px);
+}
+
+div#app {
+    max-width: 999px;
+    margin: auto;
+    display: block;
+    float: none;
+}
+

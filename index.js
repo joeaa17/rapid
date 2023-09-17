@@ -1104,6 +1104,7 @@ app.post('/get-file', async (req, res) => {
 
 
     const _req = {}
+    _req.query = {}
     _req.query.description = req.query.prompt;
     _req.query.referenceUrl = req.query.url;
     _req.query.referenceData = req.query.data;

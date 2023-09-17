@@ -58,10 +58,12 @@ getfile.addEventListener('click', async (e) => {
 
 const openTab = (tab) => {
     if(tab === 'url') {
-        document.querySelector('#tab-url').style.display = 'block'
-        document.querySelector('#tab-data').style.display = 'none'
+        document.querySelector('#url').style.display = 'block'
+        document.querySelector('#data').style.display = 'none'
     } else if(tab === 'data') {
-        document.querySelector('#tab-url').style.display = 'none'
-        document.querySelector('#tab-data').style.display = 'block'
+        document.querySelector('#url').style.display = 'none'
+        document.querySelector('#data').style.display = 'block'
     }
 }
+
+openTab('url')
