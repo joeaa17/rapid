@@ -3,6 +3,9 @@ const url = document.querySelector('#url')
 const data = document.querySelector('#data')
 const contentType = document.querySelector('#contentType')
 
+const urlBtn = document.querySelector('.tab-url')
+const dataBtn = document.querySelector('.tab-data')
+
 let _prompt = ''
 let _url = ''
 let _data = ''
@@ -35,6 +38,16 @@ contentType.addEventListener('change', (e) => {
     promptResult.innerHTML = JSON.stringify(_promptResult)
 })
 getfile.addEventListener('click', async (e) => {
+
+    if(_url === '') {
+        promptResult.innerHTML = 'Please enter a url'
+        return
+    }
+    if(_url.indexOf('http') === -1) {
+        promptResult.innerHTML = 'Please enter a valid url'
+        return
+    }
+
     e.preventDefault()
     const data = {
         prompt: _prompt,
@@ -79,3 +92,11 @@ const openTab = (tab) => {
 }
 
 openTab('url')
+
+urlBtn.addEventListener('click', (e) => {
+    openTab('url')
+})
+
+dataBtn.addEventListener('click', (e) => {
+    openTab('data')
+})
