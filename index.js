@@ -301,6 +301,7 @@ app.get('/', async (req, res) => {
 })
 
 
+
 const main = async () => {
 
     console.log('loading...');
@@ -1081,7 +1082,67 @@ const concatJSON = async (jsons) => {
     return JSON.stringify(result);
 }
 
-app.get('/render-description', async (req, res) => {
+app.get('/getFile', async (req, res) => {
+
+    
+// getfile.addEventListener('click', (e) => {
+//     e.preventDefault()
+//     const data = {
+//         prompt: _prompt,
+//         url: _url,
+//         data: _data,
+//         contentType: _contentType
+//     }
+//     fetch('/getFile', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(data)
+//     })
+// })
+
+
+    const _req = {}
+    _req.query.description = req.query.prompt;
+    _req.query.referenceUrl = req.query.url;
+    _req.query.referenceData = req.query.data;
+    _req.query.contentType = req.query.contentType;
+
+    _req.query.ignoreTags = req.query.ignoreTags;
+    _req.query.cssQuery = req.query.cssQuery;
+    _req.query.attributeNames = req.query.attributeNames;
+
+    console.log('_req', _req);
+
+    // generate a file to start writing to the response file name is the prompt without spaces and special characters and the content type extension
+    // write the response to the file in chunks with renderDescription
+    // send the file to the client
+    const prompt = decodeURIComponent(_req.query.description);
+    const extention = _req.query.contentType.split('/')[1].toLowerCase();
+    let fileName = `${prompt.replace(/[^a-zA-Z0-9]/g, '')}-${new Date().getTime()}-${Math.ceil(Math.random() * 10**10)}.${extention}`;
+    fileName = fileName.replace(/ /g, '_');
+    const filePath = `./public/responses/${fileName}`;
+    
+    console.log('prompt', prompt);
+    console.log('extention', extention);
+    console.log('fileName', fileName);
+    console.log('filePath', filePath);
+
+    fs.writeFile(filePath, 'Processing...', (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+
+    renderDescription(_req, filePath);
+
+    res.sendFile(`./public/responses/${fileName}`);
+
+})
+
+const renderDescription = async (req, _filePath) => {
+
+// app.get('/render-description', async (req, res) => {
     const prompt = decodeURIComponent(req.query.description);
     const contentType = 
     sanatizeNCheckContentType(decodeURIComponent(req.query.contentType));
@@ -1112,7 +1173,11 @@ app.get('/render-description', async (req, res) => {
             console.log('filtered', filtered);
 
             if(!filtered) {
-                res.status(500).json({ error: 'Invalid cssQuery' });
+                // res.status(500).json({ error: 'Invalid cssQuery' });
+                fs.writeFile(filePath, "error: 'Invalid cssQuery'", (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                });
                 return;
             }
             
@@ -1202,13 +1267,19 @@ app.get('/render-description', async (req, res) => {
         // process.exit()
 
         if(resultPromptTemp.length > parseInt(TOKENS_MAX*Q)) {
-            res.status(500).json({ error: 'Prompt is too long' });  
+            // res.status(500).json({ error: 'Prompt is too long' });  
+            fs.writeFile(filePath, "error: 'Prompt is too long'", (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
             return;  
         }
         else {
-          
+
             const {session, context} = await loadLlamaModules()
+
             let code = ''
+
             try {
                 code =
                 await fetchGptResponse(
@@ -1321,6 +1392,11 @@ app.get('/render-description', async (req, res) => {
         }
 
         console.log('response', response);
+
+        fs.writeFile(filePath, response, (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
     }
 
         
@@ -1344,14 +1420,24 @@ app.get('/render-description', async (req, res) => {
         response = await redisgnJson(response); 
         try {
             const json = JSON.parse(response);
-            res.json(json);
+            // res.json(json);
+
+            fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
+
         }
         catch(e) {
-            res.status(500).json({ error: 'Invalid JSON' });
+            // res.status(500).json({ error: 'Invalid JSON' });
+            fs.writeFile(filePath, "error: 'Invalid JSON'", (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
         }
     } 
     else if(contentType == 'image/svg') {
-        res.set('Content-Type', `image/svg+xml`);
+        // res.set('Content-Type', `image/svg+xml`);
 
         if(!response.includes('xmlns')) {
             // parse the existing svg attributes and add xmlns
@@ -1370,14 +1456,26 @@ app.get('/render-description', async (req, res) => {
         }
 
 
-        res.send(response);
+        // res.send(response);
+
+        fs.writeFile(filePath, response, (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
+
     }
     else {
-        res.set('Content-Type', contentType);
-        res.send(Buffer.from(response, 'utf8'));
+        // res.set('Content-Type', contentType);
+        // res.send(Buffer.from(response, 'utf8'));
+
+        fs.writeFile(filePath, response, (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
     }
     
-});
+}
+
 
 module.exports = app;
 
