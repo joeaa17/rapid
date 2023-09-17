@@ -1123,7 +1123,7 @@ app.post('/get-file', async (req, res) => {
     const extention = _req.query.contentType.split('/')[1].toLowerCase();
     let fileName = `${prompt.replace(/[^a-zA-Z0-9]/g, '')}-${new Date().getTime()}-${Math.ceil(Math.random() * 10**10)}.${extention}`;
     fileName = fileName.replace(/ /g, '_');
-    const filePath = `./public/responses/${fileName}`;
+    const filePath = `/var/data/responses/${fileName}`;
     
     console.log('prompt', prompt);
     console.log('extention', extention);
@@ -1137,7 +1137,7 @@ app.post('/get-file', async (req, res) => {
 
     renderDescription(_req, filePath);
 
-    res.sendFile(`./public/responses/${fileName}`);
+    res.sendFile(filePath);
 
 })
 

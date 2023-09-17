@@ -3,6 +3,10 @@
     float: left;
     width: calc(100% - 10px);
     margin: 5px;
+    font-size: 22px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .tabs > button {
@@ -16,3 +20,33 @@ div#app {
     float: none;
 }
 
+input#prompt {
+    font-size: 30px;
+}
+
+button#getFile {
+    width: fit-content;
+    margin: 20px auto !important;
+    display: inline-block;
+    float: none;
+    font-size: 30px;
+}
+
+select#contentType {
+    max-width: 230px;
+    margin: auto;
+    display: inline-block;
+    float: none;
+}
+
+
+button.active {
+    background: black;
+    color: white;
+}
+
+button {
+    background: white;
+    color: black;
+    cursor: pointer;
+}

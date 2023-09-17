@@ -60,9 +60,20 @@ const openTab = (tab) => {
     if(tab === 'url') {
         document.querySelector('#url').style.display = 'block'
         document.querySelector('#data').style.display = 'none'
+
+        if(!document.querySelector('.tab-url').classList.contains('active')) {
+            document.querySelector('.tab-url').classList.add('active')
+            document.querySelector('.tab-data').classList.remove('active')
+        }
+        
     } else if(tab === 'data') {
         document.querySelector('#url').style.display = 'none'
         document.querySelector('#data').style.display = 'block'
+
+        if(!document.querySelector('.tab-data').classList.contains('active')) {
+            document.querySelector('.tab-data').classList.add('active')
+            document.querySelector('.tab-url').classList.remove('active')
+        }
     }
 }
 
