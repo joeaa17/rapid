@@ -53,7 +53,8 @@ getfile.addEventListener('click', async (e) => {
     const file = await resposne.blob()
     const fileURL = URL.createObjectURL(file)
 
-    window.open(fileURL, '_blank')
+    promptResult.innerHTML = `<a href="${fileURL}" target="_blank">${fileURL}</a>`
+    // window.open(fileURL, '_blank')
 })
 
 const openTab = (tab) => {

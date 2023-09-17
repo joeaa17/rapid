@@ -50,3 +50,13 @@ button {
     color: black;
     cursor: pointer;
 }
+
+.tabs {
+    background: grey;
+}
+
+button#getFile {
+    background: black;
+    color: white;
+}
+
