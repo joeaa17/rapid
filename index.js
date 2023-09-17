@@ -1082,7 +1082,7 @@ const concatJSON = async (jsons) => {
     return JSON.stringify(result);
 }
 
-app.get('/getFile', async (req, res) => {
+app.post('/get-file', async (req, res) => {
 
     
 // getfile.addEventListener('click', (e) => {

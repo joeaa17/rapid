@@ -42,7 +42,7 @@ getfile.addEventListener('click', async (e) => {
         data: _data,
         contentType: _contentType
     }
-    const resposne = await fetch('/getFile', {
+    const resposne = await fetch('/get-file', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
