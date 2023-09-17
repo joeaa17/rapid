@@ -34,7 +34,7 @@ contentType.addEventListener('change', (e) => {
     _promptResult['contentType'] = _contentType
     promptResult.innerHTML = JSON.stringify(_promptResult)
 })
-getfile.addEventListener('click', (e) => {
+getfile.addEventListener('click', async (e) => {
     e.preventDefault()
     const data = {
         prompt: _prompt,
@@ -42,11 +42,16 @@ getfile.addEventListener('click', (e) => {
         data: _data,
         contentType: _contentType
     }
-    fetch('/getFile', {
+    const resposne = await fetch('/getFile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
+    
+    const file = await resposne.blob()
+    const fileURL = URL.createObjectURL(file)
+
+    window.open(fileURL, '_blank')
 })
