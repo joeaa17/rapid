@@ -1108,7 +1108,7 @@ app.post('/get-file', async (req, res) => {
     _req.query.description = req.query.prompt;
     _req.query.referenceUrl = req.query.url;
     _req.query.referenceData = req.query.data;
-    _req.query.contentType = req.query.contentType;
+    _req.query.contentType = req.query.contentType ? req.query.contentType : 'text/html';
 
     _req.query.ignoreTags = req.query.ignoreTags;
     _req.query.cssQuery = req.query.cssQuery;
