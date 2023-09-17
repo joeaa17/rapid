@@ -1,0 +1,52 @@
+const action = document.querySelector('#prompt')
+const url = document.querySelector('#url')
+const data = document.querySelector('#data')
+const contentType = document.querySelector('#contentType')
+
+let _prompt = ''
+let _url = ''
+let _data = ''
+let _contentType = ''
+
+const promptResult = document.querySelector('#promptResult')
+let _promptResult = {}
+
+const getfile = document.querySelector('#getFile')
+
+action.addEventListener('change', (e) => {
+    _prompt = e.target.value
+    _promptResult['prompt'] = _prompt
+    promptResult.innerHTML = JSON.stringify(_promptResult)
+})
+url.addEventListener('change', (e) => {
+    _url = e.target.value
+    _promptResult['url'] = _url
+    promptResult.innerHTML = JSON.stringify(_promptResult)
+
+})
+data.addEventListener('change', (e) => {
+    _data = e.target.value
+    _promptResult['data'] = _data
+    promptResult.innerHTML = JSON.stringify(_promptResult)
+})
+contentType.addEventListener('change', (e) => {
+    _contentType = e.target.value
+    _promptResult['contentType'] = _contentType
+    promptResult.innerHTML = JSON.stringify(_promptResult)
+})
+getfile.addEventListener('click', (e) => {
+    e.preventDefault()
+    const data = {
+        prompt: _prompt,
+        url: _url,
+        data: _data,
+        contentType: _contentType
+    }
+    fetch('/getFile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+})

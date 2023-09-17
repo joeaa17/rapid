@@ -8,7 +8,49 @@
 </head>
 <body>
     <div id="app">
-        <h1>Home</h1>
+        <input type="text" name="prompt" id="prompt" placeholder="Prompt an action">
+        <input type="text" name="url" id="url" placeholder="Enter URL">
+        <textarea name="text" id="data" cols="30" rows="10" placeholder="Enter a text/data for reference"></textarea>
+        <select name="contentType" id="contentType">
+            <option value="text/html">text/html</option>
+            <option value="application/json">application/json</option>
+            <option value="text/css">text/css</option>
+            <option value="application/xml">application/xml</option>
+            <option value="image/svg">image/svg</option>
+            <option value="text/plain">text/plain</option>
+            <option value="text/markdown">text/markdown</option>
+            <option value="text/csv">text/csv</option>
+            <option value="application/javascript">application/javascript</option>
+            <option value="application/python">application/python</option>
+            <option value="application/java">application/java</option>
+            <option value="application/php">application/php</option>
+            <option value="application/sql">application/sql</option>
+            <option value="application/ruby">application/ruby</option>
+            <option value="application/c">application/c</option>
+            <option value="application/go">application/go</option>
+            <option value="application/rust">application/rust</option>
+            <option value="application/typescript">application/typescript</option>
+            <option value="application/kotlin">application/kotlin</option>
+            <option value="application/swift">application/swift</option>
+            <option value="application/scala">application/scala</option>
+            <option value="application/clojure">application/clojure</option>
+            <option value="application/haskell">application/haskell</option>
+            <option value="application/erlang">application/erlang</option>
+            <option value="application/dart">application/dart</option>
+            <option value="application/lisp">application/lisp</option>
+            <option value="application/perl">application/perl</option>
+            <option value="application/lua">application/lua</option>
+            <option value="application/r">application/r</option>
+            <option value="application/matlab">application/matlab</option>
+            <option value="application/fortran">application/fortran</option>
+            <option value="application/assembly">application/assembly</option>
+        </select>
+        
+
+        <button id="getFile">Get File</button>
+        <div id="promptResult">
+
+        </div>
     </div>
     <script src="./js/app.js"></script>
 </html>
