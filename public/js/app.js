@@ -55,3 +55,13 @@ getfile.addEventListener('click', async (e) => {
 
     window.open(fileURL, '_blank')
 })
+
+const openTab = (tab) => {
+    if(tab === 'url') {
+        document.querySelector('#tab-url').style.display = 'block'
+        document.querySelector('#tab-data').style.display = 'none'
+    } else if(tab === 'data') {
+        document.querySelector('#tab-url').style.display = 'none'
+        document.querySelector('#tab-data').style.display = 'block'
+    }
+}

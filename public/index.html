@@ -9,8 +9,16 @@
 <body>
     <div id="app">
         <input type="text" name="prompt" id="prompt" placeholder="Prompt an action">
-        <input type="text" name="url" id="url" placeholder="Enter URL">
-        <textarea name="text" id="data" cols="30" rows="10" placeholder="Enter a text/data for reference"></textarea>
+        
+        <div class="tabs">
+            <button class="tab-url" onclick="openTab('url')">URL</button>
+            <button class="tab-data" onclick="openTab('data')">DATA</button>
+            <div class="tab-content">
+                <input type="text" name="url" id="url" placeholder="Enter URL">
+                <textarea name="text" id="data" cols="30" rows="10" placeholder="Enter a text/data for reference"></textarea>
+            </div>
+        </div>
+
         <select name="contentType" id="contentType">
             <option value="text/html">text/html</option>
             <option value="application/json">application/json</option>
