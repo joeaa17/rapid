@@ -39,15 +39,6 @@ contentType.addEventListener('change', (e) => {
 })
 getfile.addEventListener('click', async (e) => {
 
-    if(_url === '') {
-        promptResult.innerHTML = 'Please enter a url'
-        return
-    }
-    if(_url.indexOf('http') === -1) {
-        promptResult.innerHTML = 'Please enter a valid url'
-        return
-    }
-
     e.preventDefault()
     const data = {
         prompt: _prompt,
