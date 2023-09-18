@@ -1139,25 +1139,22 @@ app.post('/get-file', async (req, res) => {
         await renderDescription(_req, filePath);
     }, 100);
 
-
-    // const buffer = fs.readFileSync(filePath);
-    // res.send(buffer);
-
-    // res.sendFile(filePath);
-
-    // res.download(filePath);
-
-
-    res.send(`/download/?file=${fileName}`)
-
+    res.json({ file: `/download/?file=${fileName}` });
 })
+
 
 app.get('/download', async (req, res) => {
     const fileName = decodeURIComponent(req.query.file);
-
     const filePath = `/var/data/${fileName}`;
 
-    res.sendFile(filePath);
+    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+    res.download(filePath, fileName, (err) => {
+        if (err) {
+            // Handle error
+            console.error(err);
+            res.status(500).send('Server Error');
+        }
+    });
 })
 
 
