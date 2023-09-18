@@ -16,6 +16,8 @@ let _promptResult = {}
 
 const getfile = document.querySelector('#getFile')
 
+let processing = 'url'
+
 action.addEventListener('change', (e) => {
     _prompt = e.target.value
     _promptResult['prompt'] = _prompt
@@ -42,10 +44,17 @@ getfile.addEventListener('click', async (e) => {
     e.preventDefault()
     const data = {
         prompt: _prompt,
-        url: _url,
-        data: _data,
+        // url: _url,
+        // data: _data,
         contentType: _contentType
     }
+
+    if(processing === 'url') {
+        data['url'] = _url
+    } else if(processing === 'data') {
+        data['data'] = _data
+    }
+
     try {
         const response = await fetch('/get-file', {
             method: 'POST',
@@ -82,6 +91,8 @@ const openTab = (tab) => {
             document.querySelector('.tab-data').classList.remove('active')
         }
         
+        processing = 'url'
+
     } else if(tab === 'data') {
         document.querySelector('#url').style.display = 'none'
         document.querySelector('#data').style.display = 'block'
@@ -90,6 +101,8 @@ const openTab = (tab) => {
             document.querySelector('.tab-data').classList.add('active')
             document.querySelector('.tab-url').classList.remove('active')
         }
+
+        processing = 'data'
     }
 }
 

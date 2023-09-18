@@ -1420,10 +1420,26 @@ const renderDescription = async (req, _filePath) => {
 
         console.log('response', response);
 
-        fs.writeFile(_filePath, response, (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
-        });
+        if (contentType == 'application/json') {
+            const processing = `{ "processing": "${countChunks}/${totalChunks}" }`;
+            response = await concatJSON([JSON.parse(response), processing]);
+
+            fs.writeFile(_filePath, response, (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
+
+        }
+        else {
+            fs.writeFile(_filePath, response + 
+                `\n\n
+                (Processing: ${countChunks}/${totalChunks})
+                `
+                , (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
+        }
     }
 
         
