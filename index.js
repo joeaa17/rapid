@@ -1147,8 +1147,17 @@ app.get('/download', async (req, res) => {
     const fileName = decodeURIComponent(req.query.file);
     const filePath = `/var/data/${fileName}`;
 
-    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-    res.download(filePath, fileName, (err) => {
+    // res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+    // res.download(filePath, fileName, (err) => {
+    //     if (err) {
+    //         // Handle error
+    //         console.error(err);
+    //         res.status(500).send('Server Error');
+    //     }
+    // });
+
+    // send the file to the client
+    res.sendFile(filePath, (err) => {
         if (err) {
             // Handle error
             console.error(err);
