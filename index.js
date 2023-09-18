@@ -1108,11 +1108,11 @@ app.post('/get-file', async (req, res) => {
     _req.query.description = req.body.prompt;
     _req.query.referenceUrl = req.body.url;
     _req.query.referenceData = req.body.data;
-    _req.query.contentType = req.body.contentType ? req.query.contentType : 'text/html';
+    _req.query.contentType = req.body.contentType ? req.body.contentType : 'text/html';
 
-    _req.query.ignoreTags = req.body.ignoreTags;
-    _req.query.cssQuery = req.body.cssQuery;
-    _req.query.attributeNames = req.body.attributeNames;
+    _req.query.ignoreTags = req.body.ignoreTags ? req.body.ignoreTags : '';
+    _req.query.cssQuery = req.body.cssQuery ? req.body.cssQuery : '';
+    _req.query.attributeNames = req.body.attributeNames ? req.body.attributeNames : '';
 
     console.log('_req', _req);
 
