@@ -1201,7 +1201,7 @@ const renderDescription = async (req, _filePath) => {
 
             if(!filtered) {
                 // res.status(500).json({ error: 'Invalid cssQuery' });
-                fs.writeFile(filePath, "error: 'Invalid cssQuery'", (err) => {
+                fs.writeFile(_filePath, "error: 'Invalid cssQuery'", (err) => {
                     if (err) throw err;
                     console.log('The file has been saved!');
                 });
@@ -1420,7 +1420,7 @@ const renderDescription = async (req, _filePath) => {
 
         console.log('response', response);
 
-        fs.writeFile(filePath, response, (err) => {
+        fs.writeFile(_filePath, response, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
@@ -1449,7 +1449,7 @@ const renderDescription = async (req, _filePath) => {
             const json = JSON.parse(response);
             // res.json(json);
 
-            fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
+            fs.writeFile(_filePath, JSON.stringify(json, null, 2), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
@@ -1485,7 +1485,7 @@ const renderDescription = async (req, _filePath) => {
 
         // res.send(response);
 
-        fs.writeFile(filePath, response, (err) => {
+        fs.writeFile(_filePath, response, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
@@ -1495,7 +1495,7 @@ const renderDescription = async (req, _filePath) => {
         // res.set('Content-Type', contentType);
         // res.send(Buffer.from(response, 'utf8'));
 
-        fs.writeFile(filePath, response, (err) => {
+        fs.writeFile(_filePath, response, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
