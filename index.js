@@ -1105,14 +1105,14 @@ app.post('/get-file', async (req, res) => {
 
     const _req = {}
     _req.query = {}
-    _req.query.description = req.query.prompt;
-    _req.query.referenceUrl = req.query.url;
-    _req.query.referenceData = req.query.data;
-    _req.query.contentType = req.query.contentType ? req.query.contentType : 'text/html';
+    _req.query.description = req.body.prompt;
+    _req.query.referenceUrl = req.body.url;
+    _req.query.referenceData = req.body.data;
+    _req.query.contentType = req.body.contentType ? req.query.contentType : 'text/html';
 
-    _req.query.ignoreTags = req.query.ignoreTags;
-    _req.query.cssQuery = req.query.cssQuery;
-    _req.query.attributeNames = req.query.attributeNames;
+    _req.query.ignoreTags = req.body.ignoreTags;
+    _req.query.cssQuery = req.body.cssQuery;
+    _req.query.attributeNames = req.body.attributeNames;
 
     console.log('_req', _req);
 
@@ -1135,17 +1135,31 @@ app.post('/get-file', async (req, res) => {
         console.log('The file has been saved!');
     });
 
-    renderDescription(_req, filePath);
+    setTimeout(async () => {
+        await renderDescription(_req, filePath);
+    }, 100);
 
 
     // const buffer = fs.readFileSync(filePath);
     // res.send(buffer);
 
     // res.sendFile(filePath);
-    
-    res.download(filePath);
+
+    // res.download(filePath);
+
+
+    res.send(`/download/?file=${fileName}`)
 
 })
+
+app.get('/download', async (req, res) => {
+    const fileName = decodeURIComponent(req.query.file);
+
+    const filePath = `/var/data/${fileName}`;
+
+    res.sendFile(filePath);
+})
+
 
 const renderDescription = async (req, _filePath) => {
 
