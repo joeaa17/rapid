@@ -54,10 +54,7 @@ getfile.addEventListener('click', async (e) => {
         body: JSON.stringify(data)
     })
     
-    const file = await resposne.blob()
-    const fileURL = URL.createObjectURL(file)
-
-    promptResult.innerHTML = `<a href="${fileURL}" target="_blank">${fileURL}</a>`
+    promptResult.innerHTML = `<a href="${resposne.file}" target="_blank">${resposne.file}</a>`
     // window.open(fileURL, '_blank')
 })
 
