@@ -46,15 +46,17 @@ getfile.addEventListener('click', async (e) => {
         data: _data,
         contentType: _contentType
     }
-    const resposne = await fetch('/get-file', {
+    const response = await fetch('/get-file', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-    
-    promptResult.innerHTML = `<a href="${resposne.file}" target="_blank">${resposne.file}</a>`
+
+    console.log(response)
+
+    promptResult.innerHTML = `<a href="${response.data.file}" target="_blank">${response.data.file}</a>`
     // window.open(fileURL, '_blank')
 })
 
