@@ -64,7 +64,7 @@ getfile.addEventListener('click', async (e) => {
 
         console.log(jsonData);
 
-        promptResult.innerHTML = `<a href="${jsonData.file}" target="_blank">File</a>`
+        promptResult.innerHTML = `<a href="${jsonData.file}" target="_blank"> >>> File <<< </a>`
 
     } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
