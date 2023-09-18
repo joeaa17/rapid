@@ -46,18 +46,30 @@ getfile.addEventListener('click', async (e) => {
         data: _data,
         contentType: _contentType
     }
-    const response = await fetch('/get-file', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
+    try {
+        const response = await fetch('/get-file', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-    console.log(response)
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-    promptResult.innerHTML = `<a href="${response.data.file}" target="_blank">${response.data.file}</a>`
-    // window.open(fileURL, '_blank')
+        // Assuming the response is JSON; you can use response.text() or response.blob() as needed.
+        const jsonData = await response.json();
+
+        console.log(jsonData);
+
+        promptResult.innerHTML = `<a href="${jsonData.file}" target="_blank">Download</a>`
+
+    } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+    }
+    
 })
 
 const openTab = (tab) => {
