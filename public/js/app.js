@@ -68,7 +68,6 @@ getfile.addEventListener('click', async (e) => {
             throw new Error('Network response was not ok');
         }
 
-        // Assuming the response is JSON; you can use response.text() or response.blob() as needed.
         const jsonData = await response.json();
 
         console.log(jsonData);

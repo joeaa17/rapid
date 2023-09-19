@@ -331,7 +331,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 2048;
+const TOKENS_MAX = 1024;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -672,7 +672,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
 
 
     return await session.prompt(prompt, {
-        nThreads: 8,
+        nThreads: 16,
         // repeatPenalty: 1,
         maxTokens: context.getContextSize(),
     });
@@ -1130,7 +1130,7 @@ app.post('/get-file', async (req, res) => {
     console.log('fileName', fileName);
     console.log('filePath', filePath);
 
-    fsPromises.writeFile(filePath, 'Processing...', (err) => {
+    await fsPromises.writeFile(filePath, 'Processing...', (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
@@ -1201,7 +1201,7 @@ const renderDescription = async (req, _filePath) => {
 
             if(!filtered) {
                 // res.status(500).json({ error: 'Invalid cssQuery' });
-                fsPromises.writeFile(_filePath, "error: 'Invalid cssQuery'", (err) => {
+                await fsPromises.writeFile(_filePath, "error: 'Invalid cssQuery'", (err) => {
                     if (err) throw err;
                     console.log('The file has been saved!');
                 });
@@ -1295,7 +1295,7 @@ const renderDescription = async (req, _filePath) => {
 
         if(resultPromptTemp.length > parseInt(TOKENS_MAX*Q)) {
             // res.status(500).json({ error: 'Prompt is too long' });  
-            fsPromises.writeFile(filePath, "error: 'Prompt is too long'", (err) => {
+            await fsPromises.writeFile(filePath, "error: 'Prompt is too long'", (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
@@ -1424,14 +1424,14 @@ const renderDescription = async (req, _filePath) => {
             const processing = `{ "processing": "${countChunks}/${totalChunks}" }`;
             response = await concatJSON([JSON.parse(response), JSON.parse(processing)]);
 
-            fsPromises.writeFile(_filePath, response, (err) => {
+            await fsPromises.writeFile(_filePath, response, (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
 
         }
         else {
-            fsPromises.writeFile(_filePath, response + 
+            await fsPromises.writeFile(_filePath, response + 
                 `\n\n
                 (Processing: ${countChunks}/${totalChunks})
                 `
@@ -1465,7 +1465,7 @@ const renderDescription = async (req, _filePath) => {
             const json = JSON.parse(response);
             // res.json(json);
 
-            fsPromises.writeFile(_filePath, JSON.stringify(json, null, 2), (err) => {
+            await fsPromises.writeFile(_filePath, JSON.stringify(json, null, 2), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
@@ -1473,7 +1473,7 @@ const renderDescription = async (req, _filePath) => {
         }
         catch(e) {
             // res.status(500).json({ error: 'Invalid JSON' });
-            fsPromises.writeFile(filePath, "error: 'Invalid JSON'", (err) => {
+            await fsPromises.writeFile(filePath, "error: 'Invalid JSON'", (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
@@ -1501,7 +1501,7 @@ const renderDescription = async (req, _filePath) => {
 
         // res.send(response);
 
-        fsPromises.writeFile(_filePath, response, (err) => {
+        await fsPromises.writeFile(_filePath, response, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
@@ -1511,7 +1511,7 @@ const renderDescription = async (req, _filePath) => {
         // res.set('Content-Type', contentType);
         // res.send(Buffer.from(response, 'utf8'));
 
-        fsPromises.writeFile(_filePath, response, (err) => {
+        await fsPromises.writeFile(_filePath, response, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
         });
