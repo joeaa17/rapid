@@ -1259,7 +1259,7 @@ const renderDescription = async (req, _filePath) => {
 
     const shiftIncrement = 0;//parseInt(increment * 0.1)
 
-    // const {session, context} = await loadLlamaModules()
+    const {session, context} = await loadLlamaModules()
 
     let countChunks = 0;
     let totalChunks = Math.ceil(extraPrompt.length / (increment - shiftIncrement));
@@ -1303,7 +1303,7 @@ const renderDescription = async (req, _filePath) => {
         }
         else {
 
-            const {session, context} = await loadLlamaModules()
+            // const {session, context} = await loadLlamaModules()
 
             let code = ''
 
