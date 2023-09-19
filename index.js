@@ -494,8 +494,12 @@ async function loadLlamaModules() {
             nGpuLayers: 0 
         });
 
+        const grammar = await LlamaGrammar.getFor("json");
+        // "json" | "list" | "arithmetic" | "japanese" | "chess"
+
         context = new LlamaContext({
             model,
+            grammar,
             mmap: false,
             gpu: false,
             // maxTokens: 64,
