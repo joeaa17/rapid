@@ -485,7 +485,7 @@ async function loadLlamaModules() {
             modelPath: filePath,
             enableLogging: true,
             nCtx: 1024,
-            seed: 0,
+            // seed: 0,
             f16Kv: true,
             logitsAll: false,
             vocabOnly: false,
@@ -678,11 +678,11 @@ async function fetchGptResponse(prompt, contentType, session, context) {
 
 
     return await session.prompt(prompt, {
-        nThreads: 4,
+        nThreads: 8,
         repeatPenalty: 1,
         // maxTokens: 4096,
         maxTokens: context.getContextSize(),
-        temperature: 1.0,
+        // temperature: 1.0,
     });
 
 
