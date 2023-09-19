@@ -482,24 +482,24 @@ async function loadLlamaModules() {
 
         model = new LlamaModel({ 
             modelPath: filePath,
-            // enableLogging: true,
+            enableLogging: true,
             nCtx: 1024,
-            // seed: 0,
+            seed: 0,
             f16Kv: true,
-            // logitsAll: false,
-            // vocabOnly: false,
-            // useMlock: false,
-            // embedding: false,
-            // useMmap: true,
-            // nGpuLayers: 0 
+            logitsAll: false,
+            vocabOnly: false,
+            useMlock: false,
+            embedding: false,
+            useMmap: true,
+            nGpuLayers: 0 
         });
 
         context = new LlamaContext({
             model,
-            // mmap: false,
-            // gpu: false,
+            mmap: false,
+            gpu: false,
             // maxTokens: 64,
-            // batchSize: 4
+            batchSize: 4,
 
         });
 
@@ -675,8 +675,8 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     return await session.prompt(prompt, {
         nThreads: 4,
         repeatPenalty: 1,
-        // maxTokens: context.getContextSize(),
-
+        maxTokens: context.getContextSize(),
+        temperature: 1.0,
     });
 
 
