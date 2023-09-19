@@ -1440,9 +1440,9 @@ const renderDescription = async (req, _filePath) => {
 
         if (contentType == 'application/json') {
             const processing = `{ "processing": "${countChunks}/${totalChunks}" }`;
-            response = await concatJSON([JSON.parse(response), JSON.parse(processing)]);
+            const _response = await concatJSON([JSON.parse(response), JSON.parse(processing)]);
 
-            await fsPromises.writeFile(_filePath, response, (err) => {
+            await fsPromises.writeFile(_filePath, _response, (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
