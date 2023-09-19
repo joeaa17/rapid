@@ -331,7 +331,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 4096;
+const TOKENS_MAX = 1024;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -443,14 +443,14 @@ async function fileExists(_filePath) {
 
 async function loadLlamaModules() {
     const modelURL = 
+    'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
     //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf';
-    'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
+    // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
     
     
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q2_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q4_K_M.gguf'
     
-    // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q2_K.gguf'
 
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q4_K_M.gguf'
