@@ -672,19 +672,29 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     // return result;
 
 
-    return await session.prompt(prompt, {
-        nThreads: 4,
-        repeatPenalty: 1,
-        maxTokens: 4096,
-        // maxTokens: context.getContextSize(),
-        temperature: 1.0,
-    });
+    // return await session.prompt(prompt, {
+    //     nThreads: 4,
+    //     repeatPenalty: 1,
+    //     maxTokens: 4096,
+    //     // maxTokens: context.getContextSize(),
+    //     temperature: 1.0,
+    // });
 
 
 
 
 
-
+    const completionResponse = await session.generate({
+        prompt,
+        maxTokens: 64,
+        temperature: 0.7,
+        topK: 10,
+        topP: 0.9,
+      });
+      
+      // Select the first completion and return it to the user.
+      const response = completionResponse[0];
+      return response;
 
 
 
