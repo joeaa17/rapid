@@ -684,7 +684,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
 
 
 
-    const completionResponse = await session.generate({
+    const completionResponse = await session.generateWithContext({
         prompt,
         maxTokens: 64,
         temperature: 0.7,
