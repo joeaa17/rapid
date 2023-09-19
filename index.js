@@ -360,7 +360,7 @@ const Q = 1.618033988749895;
 // loadBard();
 
 
-const fs = require('fs');
+// const fs = require('fs');
 
 // async function downloadModel(url, path) {
 //     const response = await axios.get(url, {
@@ -482,10 +482,10 @@ async function loadLlamaModules() {
 
         model = new LlamaModel({ 
             modelPath: filePath,
-            enableLogging: true,
-            // nCtx: 1024,
+            // enableLogging: true,
+            nCtx: 1024,
             // seed: 0,
-            // f16Kv: false,
+            f16Kv: true,
             // logitsAll: false,
             // vocabOnly: false,
             // useMlock: false,
@@ -500,6 +500,7 @@ async function loadLlamaModules() {
             // gpu: false,
             // maxTokens: 64,
             // batchSize: 4
+
         });
 
         session = new LlamaChatSession({ context });
@@ -674,7 +675,8 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     return await session.prompt(prompt, {
         nThreads: 4,
         repeatPenalty: 1,
-        maxTokens: context.getContextSize(),
+        // maxTokens: context.getContextSize(),
+
     });
 
 
