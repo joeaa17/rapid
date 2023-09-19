@@ -675,7 +675,8 @@ async function fetchGptResponse(prompt, contentType, session, context) {
     return await session.prompt(prompt, {
         nThreads: 4,
         repeatPenalty: 1,
-        maxTokens: context.getContextSize(),
+        maxTokens: 4096,
+        // maxTokens: context.getContextSize(),
         temperature: 1.0,
     });
 
