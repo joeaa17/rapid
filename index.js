@@ -413,7 +413,8 @@ async function downloadModel(url, path) {
     }
 
     return new Promise((resolve, reject) => {
-        const fileStream = fs.createWriteStream(path);
+        const { createWriteStream } = require('fs');
+        const fileStream = createWriteStream(path);
         response.data.pipe(fileStream);
         fileStream.on('finish', resolve);
         fileStream.on('error', reject);
