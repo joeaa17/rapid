@@ -29,7 +29,6 @@ const axios = require( 'axios');
 // const { optimize } = require( 'svgo');
 
 const { promises: fsPromises } = require('fs');
-const fs = require('fs'); // <- temp
 
 const nodemailer = require( 'nodemailer');
 
@@ -414,7 +413,8 @@ async function downloadModel(url, path) {
     }
 
     return new Promise((resolve, reject) => {
-        const fileStream = fs.createWriteStream(path);
+        const { createWriteStream } = require('fs'); // <- temp
+        const fileStream = createWriteStream(path);
         response.data.pipe(fileStream);
         fileStream.on('finish', resolve);
         fileStream.on('error', reject);
