@@ -331,7 +331,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 1024;
+const TOKENS_MAX = 4096;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -484,15 +484,15 @@ async function loadLlamaModules() {
         model = new LlamaModel({ 
             modelPath: filePath,
             enableLogging: true,
-            // nCtx: 1024,
+            nCtx: 1024,
             // seed: 0,
-            // f16Kv: true,
-            // logitsAll: false,
-            // vocabOnly: false,
-            // useMlock: false,
-            // embedding: false,
-            // useMmap: true,
-            // nGpuLayers: 0 
+            f16Kv: true,
+            logitsAll: false,
+            vocabOnly: false,
+            useMlock: false,
+            embedding: false,
+            useMmap: true,
+            nGpuLayers: 0 
         });
 
         // const grammar = await LlamaGrammar.getFor("json");
@@ -501,10 +501,10 @@ async function loadLlamaModules() {
         context = new LlamaContext({
             model,
             // grammar,
-            // mmap: false,
-            // gpu: false,
+            mmap: false,
+            gpu: false,
             // maxTokens: 64,
-            // batchSize: 4,
+            batchSize: 4,
 
         });
 
