@@ -331,7 +331,7 @@ const randomBetween = (min, max) => {
 
 // const { LLM } = require("llama-node");
 
-const TOKENS_MAX = 512;
+const TOKENS_MAX = 1024;
 const Q = 1.618033988749895;
 
 // async function loadFetch() {
@@ -613,7 +613,7 @@ async function loadLlamaModules() {
 
 async function fetchGptResponse(prompt, contentType, session, context) {
 
-/*
+
     if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
     // if(await fileExists(filePath) == false) {
 
@@ -621,7 +621,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
         await loadLlamaModules();
         initalize = 1;
     }
-*/
+
     // const model = new LlamaModel({
     //     modelPath: './src/ai/codellama-7b-python.Q2_K.gguf'
     // })
