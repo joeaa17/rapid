@@ -29,6 +29,7 @@ const axios = require( 'axios');
 // const { optimize } = require( 'svgo');
 
 const { promises: fsPromises } = require('fs');
+const fs = require('fs'); // <- temp
 
 const nodemailer = require( 'nodemailer');
 
