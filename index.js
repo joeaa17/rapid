@@ -614,7 +614,7 @@ async function loadLlamaModules() {
 
 async function fetchGptResponse(prompt, contentType, session, context) {
 
-
+/*
     if(initalize == 0 || session == '' || session == undefined || session == null || session == 'undefined') {
     // if(await fileExists(filePath) == false) {
 
@@ -622,7 +622,7 @@ async function fetchGptResponse(prompt, contentType, session, context) {
         await loadLlamaModules();
         initalize = 1;
     }
-
+*/
     // const model = new LlamaModel({
     //     modelPath: './src/ai/codellama-7b-python.Q2_K.gguf'
     // })
