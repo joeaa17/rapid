@@ -413,8 +413,7 @@ async function downloadModel(url, path) {
     }
 
     return new Promise((resolve, reject) => {
-        const { createWriteStream } = require('fs'); // <- temp
-        const fileStream = createWriteStream(path);
+        const fileStream = fs.createWriteStream(path);
         response.data.pipe(fileStream);
         fileStream.on('finish', resolve);
         fileStream.on('error', reject);
@@ -443,8 +442,8 @@ async function fileExists(_filePath) {
 
 
 async function loadLlamaModules() {
-    const modelURL = 'https://huggingface.co/TheBloke/Llama-2-7B-GGUF/resolve/main/llama-2-7b.Q8_0.gguf?download=true'
-    // 'https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/resolve/main/codellama-34b-instruct.Q6_K.gguf'
+    const modelURL = 
+    'https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/resolve/main/codellama-34b-instruct.Q6_K.gguf'
     // 'https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF/resolve/main/codellama-13b-python.Q6_K.gguf'
     //  'https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/resolve/main/codellama-34b-python.Q6_K.gguf';
     // 'https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF/resolve/main/codellama-7b-python.Q2_K.gguf';
@@ -486,7 +485,7 @@ async function loadLlamaModules() {
             modelPath: filePath,
             enableLogging: true,
             nCtx: 1024,
-            // seed: 0,
+            seed: 0,
             f16Kv: true,
             logitsAll: false,
             vocabOnly: false,
@@ -679,11 +678,11 @@ async function fetchGptResponse(prompt, contentType, session, context) {
 
 
     return await session.prompt(prompt, {
-        nThreads: 4, // 8,
+        nThreads: 4,
         repeatPenalty: 1,
         // maxTokens: 4096,
-        maxTokens: 1024, // context.getContextSize(),
-        // temperature: 1.0,
+        maxTokens: context.getContextSize(),
+        temperature: 1.0,
     });
 
 
